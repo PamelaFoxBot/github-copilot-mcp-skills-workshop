@@ -83,7 +83,14 @@ This repository has a small quiz script in `src/quiz.py` with known bugs and mis
  Which of these issues would be the easiest to fix? Pick one for me.
  ```
 
-1. Run the quiz to see its behavior:
+1. Ask Copilot to run the quiz so you can see its behavior:
+
+ ```text
+ Run the MCP quiz in this repository so I can try it.
+ ```
+
+ If Copilot cannot run it in your current environment, use this command in a
+ workspace terminal:
 
  ```bash
  uv run python src/quiz.py
