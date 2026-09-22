@@ -1,15 +1,14 @@
 [project]
-name = "github-copilot-mcp-tutorial"
+name = "github-copilot-mcp-skills-workshop"
 version = "0.1.0"
-description = "A workshop to build a Python FastMCP server"
+description = "A workshop on extending GitHub Copilot with MCP servers and agent skills"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = [
-    "fastmcp[apps]>=3.2.4",
-]
+dependencies = []
 
 [dependency-groups]
 dev = [
+    "pytest>=8.3.0",
     "ruff>=0.8.0",
     "prek>=0.1.0",
 ]
@@ -19,3 +18,6 @@ line-length = 120
 target-version = "py313"
 lint.select = ["E", "F", "I", "UP"]
 lint.ignore = ["D203"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]

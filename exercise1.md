@@ -1,199 +1,96 @@
-# Exercise 1: Connect to an MCP server
+# Exercise 1: Understand MCP and connect a public server
 
-In this exercise, you'll set up a development environment and connect GitHub Copilot to a public MCP server.
+In this exercise, you will connect GitHub Copilot to a public MCP server and inspect the tools it provides.
 
-- [Step 1: Set up your development environment](#step-1-set-up-your-development-environment)
-- [Step 2: Set up GitHub Copilot](#step-2-set-up-github-copilot)
-- [Step 3: Use a public MCP server](#step-3-use-a-public-mcp-server)
+## Contents
 
----
+- [Step 1: Connect Microsoft Learn MCP](#step-1-connect-microsoft-learn-mcp)
+- [Step 2: Inspect the available tools](#step-2-inspect-the-available-tools)
+- [Step 3: Use the tools for research](#step-3-use-the-tools-for-research)
+- [Bonus](#bonus)
 
-## Step 1: Set up your development environment
+## Step 1: Connect Microsoft Learn MCP
 
-Pick **one** of the options below to get the tutorial repository open and ready.
+Microsoft Learn MCP is a remote Streamable HTTP server at `https://learn.microsoft.com/api/mcp`. It is public, free, and requires no sign-in.
 
-### Option A: GitHub Codespaces (recommended)
+### VS Code or Codespaces
 
-Everything is pre-configured — no local installs needed. You just need a [GitHub account](https://github.com/).
-
-1. Login to your GitHub account.
-2. Go to [github.com/pamelafox/github-copilot-mcp-tutorial](https://github.com/pamelafox/github-copilot-mcp-tutorial).
-3. Click **Code → Codespaces → Create codespace on main**.
-
-   ![Screenshot of Create codespace button](docs/screenshot_codespaces_open.png)
-
-4. Wait for the Codespace to build. Once the editor loads, you're ready to move on to [Step 2](#step-2-set-up-github-copilot).
-
-### Option B: VS Code + Dev Containers
-
-This runs the same pre-configured environment locally inside a Docker container.
-
-**Prerequisites:**
-
-- [VS Code](https://code.visualstudio.com/) installed
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running
-- [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) installed in VS Code
-
-**Steps:**
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/pamelafox/github-copilot-mcp-tutorial.git
-   ```
-
-2. Open the folder in VS Code:
-
-   ```bash
-   code github-copilot-mcp-tutorial
-   ```
-
-3. When prompted "Reopen in Container", click **Reopen in Container**. (Or open the Command Palette and run **Dev Containers: Reopen in Container**.)
-4. Wait for the container to build. Once the editor reloads, you're ready to move on to [Step 2](#step-2-set-up-github-copilot).
-
-### Option C: Local environment
-
-If you prefer to work without Docker or Codespaces, you can set up a local Python environment.
-
-**Prerequisites:**
-
-- Python 3.12 or later
-- [uv](https://docs.astral.sh/uv/getting-started/installation/): Python package manager that can also download Python if you don't yet have it installed.
-
-**Steps:**
-
-1. Clone (or download) the repository:
-
-   ```bash
-   git clone https://github.com/pamelafox/github-copilot-mcp-tutorial.git
-   cd github-copilot-mcp-tutorial
-   ```
-
-2. Install dependencies:
-
-   ```bash
-   uv sync
-   ```
-
-3. Open the folder in your editor of choice (VS Code, PyCharm, etc.). Once the editor loads, you're ready to move on to [Step 2](#step-2-set-up-github-copilot).
-
----
-
-## Step 2: Set up GitHub Copilot
-
-Set up **one** of the GitHub Copilot options below: [GitHub Copilot in VS Code / Codespaces](#option-a-github-copilot-in-vs-code--codespaces) or [GitHub Copilot CLI](#option-b-github-copilot-cli).
-
-### Option A: GitHub Copilot in VS Code / Codespaces
-
-1. Check the right side of VS Code to see if the Copilot Chat side panel is already open. If it's not open, find the "Toggle Chat" icon at the top of VS Code, locate and click it to open the side panel.
-
-   ![Screenshot of "Toggle chat" icon in top right](docs/screenshot_copilot_togglechat.png)
-
-   > 🪧 **Note:** If this is your first time using GitHub Copilot, you will need to accept the usage terms to continue.
-
-2. Make sure the chat is in **Agent** mode. (You may not see "Agent", but you should see a loop icon which says "Agent" upon clicking.)
-
-   ![Screenshot of chat box with "Agent" mode selected](docs/screenshot_copilot_agent.png)
-
-3. Send a test message "Hello" to confirm the agent is working.
-4. Move on to [Step 3](#step-3-use-a-public-mcp-server)
-
-### Option B: GitHub Copilot CLI
-
-1. Install GitHub Copilot CLI by following the [installation guide](https://docs.github.com/en/copilot/how-tos/copilot-cli/set-up-copilot-cli/install-copilot-cli).
-2. Verify the installation:
-
-   ```bash
-   copilot
-   ```
-
-3. Move on to [Step 3](#step-3-use-a-public-mcp-server)
-
-### Option C: GitHub Copilot app
-
-1. Install GitHub Copilot app by following the [installation guide](https://github.com/github/app#install).
-2. Open the GitHub Copilot app.
-3. From the "Sessions" tab in the sidebar, select "+" and "Add project from GitHub repository"
-4. Enter the URL of this repository: "https://github.com/pamelafox/github-copilot-mcp-tutorial"
-5. Send a test message "Hello" to confirm the app is working.
-
----
-
-## Step 3: Use a public MCP server
-
-Now connect GitHub Copilot to a **public MCP server** that requires no authentication. The examples below use the MS Learn documentation MCP server, but you can also try other options:
-
-| Server | MCP Server URL | Description |
-| --- | --- | --- |
-| [Microsoft Learn](https://learn.microsoft.com/training/support/mcp) | `https://learn.microsoft.com/api/mcp` | MS Learn documentation |
-| [DeepWiki](https://docs.devin.ai/work-with-devin/deepwiki-mcp) | `https://mcp.deepwiki.com/mcp` | GitHub repository documentation |
-| [French government](https://github.com/datagouv/datagouv-mcp) | `https://mcp.data.gouv.fr/mcp` | French government data |
-
-Follow the instructions for your agent: [GitHub Copilot in VS Code](#github-copilot-in-vs-code--public-server) or [GitHub Copilot CLI](#github-copilot-cli--public-server).
-
-### GitHub Copilot in VS Code
-
-1. Open (or create) the file `.mcp.json` in your workspace and make sure it contains a server configuration pointed at the Microsoft Learn MCP server URL:
-
+1. Open `.mcp.json` in the repository root and add the server:
 
    ```json
-    {
-       "mcpServers": {
-          "mslearn": {
-             "type": "http",
-             "url": "https://learn.microsoft.com/api/mcp"
-          }
+   {
+     "servers": {
+       "microsoft-learn": {
+         "type": "http",
+         "url": "https://learn.microsoft.com/api/mcp"
        }
-    }
+     }
+   }
    ```
 
-2. Select "Start" on the server in the config file.
-
-   ![Screenshot of Start next to mslearn server in mcp.json](docs/screenshot_vscode_mcpjson_mslearn.png)
-
-3. In the Copilot Chat panel, click the tools icon to confirm the server tools are listed.
-
-   ![Screenshot of tools icon in chat window](docs/screenshot_vscode_configuretools.png)
-
-   ![Screenshot of tools listing for remote-mcp-server](docs/screenshot_vscode_tools_mslearn.png)
-
-4. Ask a question that requires context from Microsoft Learn documentation:
-
-   ```text
-   What kind of GPUs are available for Azure Container Apps?
-   ```
+2. Save the file and select **Start** above the server definition. If VS Code asks whether you trust the server, review the URL and approve it.
+3. Open Copilot Chat in **Agent** mode.
+4. Select **Configure Tools** in the chat input and expand `microsoft-learn`.
 
 ### GitHub Copilot CLI
 
-1. Add the MCP server using the CLI:
+1. Add the server to your user configuration:
 
    ```bash
-   copilot mcp add --transport http mslearn https://learn.microsoft.com/api/mcp
+   copilot mcp add --transport http microsoft-learn https://learn.microsoft.com/api/mcp
    ```
 
-2. Ask a question that can be answered by the Microsoft Learn MCP server:
-
-   ```bash
-   copilot -i "What kind of GPUs are available for Azure Container Apps?"
-   ```
+2. Start an interactive `copilot` session.
+3. Enter `/mcp show microsoft-learn` to inspect its status and tools.
 
 ### GitHub Copilot app
 
-1. Open the GitHub Copilot app
+1. Open **Settings**, select **MCP**, then select **Add server**.
+2. Name it `microsoft-learn`, choose **HTTP**, and enter `https://learn.microsoft.com/api/mcp`.
+3. Add the server and confirm it's shown as enabled and loaded with a green check mark.
 
-2. Select the "Settings" (gear) icon in the bottom left.
+## Step 2: Inspect the available tools
 
-3. Select "MCP servers" from settings menu.
+Confirm that the server currently exposes these tools:
 
-4. Select "+ Add server" and "Add custom server".
+- `microsoft_docs_search` for semantic search of official Microsoft documentation
+- `microsoft_docs_fetch` for reading a selected documentation page
+- `microsoft_code_sample_search` for official code examples
 
-   * For server name, enter "mslearn"
-   * Select "HTTP" next to server name. 
-   * For URL, enter "https://learn.microsoft.com/api/mcp"
-   * Select "Add server"
+Ask Copilot:
 
-5. Ask a question that requires context from Microsoft Learn MCP server:
+```text
+List the tools exposed by the Microsoft Learn MCP server. For each tool, show its purpose and required arguments.
+```
 
-   ```text
-   What kind of GPUs are available for Azure Container Apps?
-   ```
+## Step 3: Use the tools for research
+
+Ask Copilot:
+
+```text
+Find the current GPU options for Azure Container Apps. Cite the relevant Microsoft Learn docs.
+```
+
+### What to observe
+
+- Copilot should choose `microsoft_docs_search`, and may follow with `microsoft_docs_fetch`.
+- You can expand tool calls to see the arguments and return value.
+- A read-only documentation lookup may still require a tool approval in GitHub Copilot, depending on how you've [configured approvals](https://code.visualstudio.com/docs/agents/run/approvals).
+
+## Bonus
+
+If you have more time:
+
+- Disable `microsoft_docs_fetch`, repeat the prompt, and compare the depth of the answer.
+- Ask Copilot to find an official Python code sample for uploading text to Azure Blob Storage, then watch whether it chooses `microsoft_code_sample_search`.
+- Connect another read-only MCP server and compare its tools:
+
+  | Server | Endpoint | Provides |
+  | --- | --- | --- |
+  | [DeepWiki](https://docs.devin.ai/work-with-devin/deepwiki-mcp) | `https://mcp.deepwiki.com/mcp` | GitHub repository documentation |
+  | [French government](https://github.com/datagouv/datagouv-mcp) | `https://mcp.data.gouv.fr/mcp` | French government data |
+  | [Hugging Face](https://huggingface.co/mcp) | `https://huggingface.co/mcp` | Model, dataset, paper, and Space discovery |
+
+  Find more public servers in the [GitHub MCP Registry](https://github.com/mcp).
+
+Continue to [Exercise 2](exercise2.md).

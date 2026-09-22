@@ -1,192 +1,168 @@
-# Exercise 3: Build your own MCP server
+# Exercise 3: Use project and installed skills
 
-In this exercise, you'll build an MCP server from scratch using [FastMCP](https://gofastmcp.com/). You'll create your own **store** server — selling whatever products you want — with tools for browsing and buying, then test it with your coding agent and the MCP Inspector.
+In Exercise 2, you used GitHub MCP tools to repair a quiz issue and open a pull
+request. In this exercise, choose one or more of the following activities to
+explore project, installed, client-provided, and custom skills.
 
-- [Step 1: Create the server skeleton](#step-1-create-the-server-skeleton)
-- [Step 2: Customize the store](#step-2-customize-the-store)
-- [Step 3: Add a tool to list products](#step-3-add-a-tool-to-list-products)
-- [Step 4: Add a tool to buy a product](#step-4-add-a-tool-to-buy-a-product)
-- [Step 5: Run and test the server](#step-5-run-and-test-the-server)
-- [Step 6: Test with GitHub Copilot](#step-6-test-with-github-copilot)
-- [Take it further](#take-it-further)
+## Contents
 
----
+- [Use a project skill](#use-a-project-skill)
+- [Install a third-party skill](#install-a-third-party-skill)
+- [Explore skills provided by your Copilot client](#explore-skills-provided-by-your-copilot-client)
+- [Create your own project skill](#create-your-own-project-skill)
+- [What to observe](#what-to-observe)
 
-## Step 1: Create the server skeleton
+## Prerequisites
 
-Create a file called `servers/store_server.py` with the following starter code:
+- To use `pr-readiness`, complete Exercise 2, keep its pull request URL, and
+  keep GitHub MCP connected with the `repos`, `issues`, and `pull_requests`
+  toolsets.
+- To install a third-party skill, use VS Code, Codespaces, or Copilot CLI with
+  a workspace terminal.
 
-```python
-import logging
-from typing import Annotated
+If you used the Copilot app for earlier exercises, open your fork in a
+Codespace to run the skill installer. The app does not provide a workspace
+terminal.
 
-from fastmcp import FastMCP
-from fastmcp.exceptions import ToolError
+## Use a project skill
 
-logging.basicConfig(level=logging.WARNING, format="%(asctime)s - %(message)s")
-logger = logging.getLogger("StoreMCP")
-logger.setLevel(logging.INFO)
+The workshop includes `.github/skills/pr-readiness/SKILL.md`. Open the file and
+inspect its frontmatter and workflow. The skill provides instructions; GitHub
+MCP provides the live tools and authenticated data.
 
-mcp = FastMCP("Bake & Take")
-
-# In-memory product inventory: name -> {price, quantity}
-INVENTORY = {
-    "Croissant": {"price": 3.50, "quantity": 40},
-    "Sourdough Loaf": {"price": 8.00, "quantity": 12},
-    "Cinnamon Roll": {"price": 4.25, "quantity": 20},
-    "Blueberry Muffin": {"price": 3.00, "quantity": 35},
-}
-
-# TODO: Add your tools here (Steps 3 and 4)
-
-
-if __name__ == "__main__":
-    logger.info("Store MCP server starting (HTTP mode on port 8420)")
-    mcp.run(transport="streamable-http", host="0.0.0.0", port=8420)
-```
-
----
-
-## Step 2: Customize the store
-
-The starter code uses a bakery theme, but you can change it to anything you like. Pick a theme and update the `FastMCP` name and `INVENTORY` in your file:
-
-| Theme | Example products |
-| --- | --- |
-| Bookshop | Python Crash Course, Designing Data-Intensive Applications |
-| Plant Shop | Monstera, Snake Plant, Pothos |
-| Coffee Roaster | Ethiopian Yirgacheffe, Colombian Supremo |
-| Record Store | Kind of Blue (Miles Davis), Rumours (Fleetwood Mac) |
-
-Each product needs a `price` and `quantity`. Feel free to keep the bakery if you like it — just make sure you have at least 3–5 products before moving on.
-
----
-
-## Step 3: Add a tool to list products
-
-Add a tool that returns the current product listings:
-
-```python
-@mcp.tool
-async def list_products() -> dict:
-    """List all available products with their prices and stock levels."""
-    return INVENTORY
-```
-
----
-
-## Step 4: Add a tool to buy a product
-
-Add a tool that "buys" a product by reducing its quantity in the inventory.
-
-```python
-@mcp.tool
-async def buy_product(
-    name: Annotated[str, "Name of the product"],
-    quantity: Annotated[int, "Quantity of product to buy"],
-) -> str:
-    """Buy a product from the store, reducing its inventory."""
-    if name not in INVENTORY:
-        raise ToolError(f"'{name}' is not available in the store.")
-    product = INVENTORY[name]
-    if product["quantity"] < quantity:
-        raise ToolError(f"Only {product['quantity']} units of '{name}' are in stock.")
-    product["quantity"] -= quantity
-    total = product["price"] * quantity
-    return f"Purchased {quantity}x {name} for ${total:.2f}. Remaining stock: {product['quantity']}."
-```
-
----
-
-## Step 5: Run and test the server
-
-Start the server:
-
-```bash
-uv run servers/store_server.py
-```
-
-You should see output like:
+Start a fresh chat and ask Copilot:
 
 ```text
-Product Store MCP server starting (HTTP mode on port 8420)
+Use the /pr-readiness skill to assess this pull request: <YOUR-PR-URL>
+
+Use GitHub MCP for all GitHub data. Show me the readiness report, but do not
+make any GitHub changes.
 ```
 
-The server is now listening at `http://localhost:8420/mcp`.
+If slash invocation is unavailable, ask Copilot to use the repository's
+`pr-readiness` skill by name. Approve the read-only GitHub calls as they appear.
 
----
+Check that the report:
 
-## Step 6: Test with GitHub Copilot
+1. Names the correct upstream base and your fork's head branch.
+2. Connects the linked issue requirements to the changed file.
+3. Distinguishes missing checks or reviews from failures.
+4. Claims local validation only when commands actually ran.
 
-With the server running, add it to GitHub Copilot.
+## Install a third-party skill
 
-### GitHub Copilot in VS Code
+[Matt Pocock's skills repository](https://github.com/mattpocock/skills) contains
+small, composable engineering workflows. Its `/grill-me` skill interviews you
+to expose unresolved decisions in a plan or design.
 
-1. Add to `.mcp.json`:
+Before installing third-party skills, inspect their source and consider what
+instructions or scripts they contain. In this case, `grill-me` is a user-facing
+wrapper around the companion `grilling` skill, so install both using one of the
+following options.
 
-    ```json
-    {
-        "mcpServers": {
-            "product-store": {
-                "type": "http",
-                "url": "http://localhost:8420/mcp"
-            }
-        }
-    }
-    ```
+### Option A: GitHub CLI
 
-2. Select "Start" from the CodeLens menu above the server entry.
+Skill installation in GitHub CLI is currently in preview. If your version of
+`gh` includes the `gh skills` command, run:
 
-3. Close the `store_server.py` file so that Copilot does not keep the file in its direct context and try to answer questions based on the file itself.
+```bash
+gh skills add mattpocock/skills grill-me \
+  --agent github-copilot --scope project
+gh skills add mattpocock/skills grilling \
+  --agent github-copilot --scope project
+```
 
-3. Open the "Configure tools" button from the Copilot chat, and ensure that "product-store" mcp server is enabled, with the expected tools listed.
+GitHub CLI installs one named skill at a time. `gh skill install` is the
+canonical command; `gh skills add` is its shorter alias.
 
-4. Ask Copilot to query the store:
+### Option B: skills.sh CLI
 
-    ```text
-    What products are available in the store?
-    ```
+```bash
+npx --yes skills@latest add mattpocock/skills \
+  --skill grill-me grilling \
+  --agent github-copilot \
+  --copy \
+  --yes
+```
 
-    Make sure that Copilot uses the MCP server to answer the question, **not** the local file.
+Both options copy the skills into `.agents/skills` and record their source.
+Open both installed `SKILL.md` files and compare their frontmatter and roles:
 
-5. Ask Copilot to buy a product from the store, based on the listed products.
+- `grill-me` is invoked explicitly by the user.
+- `grilling` contains the reusable interview procedure.
 
-### GitHub Copilot CLI
+Start a fresh chat and try the installed flow:
 
-1. Add the MCP server using this command:
+```text
+Use /grill-me to stress-test this idea: add a timed mode to the MCP quiz.
+Ask the first round of questions, then stop so I can review them.
+```
 
-   ```bash
-   copilot mcp add --transport http product-store http://localhost:8420/mcp
-   ```
+Notice how one skill can delegate to another. You do not need to implement the
+idea or commit the installed files during this exercise.
 
-2. Ask Copilot to query the store:
+## Explore skills provided by your Copilot client
 
-   ```bash
-   copilot -i "What products are available in the store?"
-   ```
+Available skills vary by client, installed extensions or plugins, and version.
+Choose the instructions for your current surface:
 
-### GitHub Copilot app
+- **VS Code or Codespaces**: Type `/` to browse available skills, or type
+  `/skills` to open **Configure Skills**. Inspect the source of a skill provided
+  by VS Code or an extension, then invoke it on a small task. If `/create-skill`
+  is available, you can use it for the next activity.
+- **Copilot CLI**: Run `/skills list`, then `/skills info SKILL-NAME` to inspect
+  a preinstalled skill and its location. Invoke it with
+  `/SKILL-NAME your task`.
+- **GitHub Copilot app**: Select **Customize**, then **Skills**, to browse the
+  available set. Try a GitHub-provided skill such as `/af` to find a skill for
+  a task. The app's built-in skills differ from those in VS Code and CLI.
 
-1. Open the GitHub Copilot app.
-2. Select the "Settings" (gear) icon in the bottom left.
-3. Select "MCP servers" from settings menu.
-4. Select "+ Add server" and "Add custom server".
+Do not assume that a skill available in one client exists in another. Compare
+its name, source, purpose, and tools before invoking it.
 
-   * For server name, enter "product-store"
-   * Select "HTTP" next to server name.
-   * For URL, enter "http://localhost:8420/mcp"
-   * Select "Add server"
+## Create your own project skill
 
-5. In a new chat, ask Copilot to query the store:
+Create `.github/skills/quiz-question-reviewer/SKILL.md`. In VS Code, invoke
+`/create-skill`; in another client, ask Copilot to create the file directly.
+Use this request:
 
-   ```text
-   What products are available in the store?
-   ```
+```text
+Create a project skill named quiz-question-reviewer. It should review a
+multiple-choice MCP quiz question, use Microsoft Learn MCP to verify the fact,
+check that exactly one of four options is correct, assess whether the
+distractors are plausible, and recommend precise revisions. It must not edit
+the quiz unless I explicitly ask.
+```
 
-## Take it further
+Inspect the generated file. Confirm that the directory matches the skill name,
+the frontmatter includes a specific `name` and `description`, and the body
+defines a repeatable workflow rather than one fixed answer.
 
-If you finish early, try adding:
+Start a fresh chat so Copilot discovers the new skill. In Copilot CLI, you can
+instead run `/skills reload`, followed by
+`/skills info quiz-question-reviewer`. Then try it:
 
-- A `search_products` tool that filters by keyword or price range
-- A `@mcp.resource` that exposes the full inventory as read-only data
-- A `@mcp.prompt` that generates a shopping recommendation prompt
+```text
+Use /quiz-question-reviewer to review this question:
+
+Which MCP primitive lets a server expose executable operations?
+A. Tools
+B. Resources
+C. Prompts
+D. Roots
+Correct answer: A
+```
+
+Watch for a Microsoft Learn MCP call and verify that the response separates
+factual evidence from editorial recommendations. Keep or delete the new skill
+after the experiment; do not commit it unless you want it in your fork.
+
+## What to observe
+
+- Repository skills are available to everyone who opens the project.
+- The installer can add selected skills for a specific Copilot host.
+- Skills are files you can inspect and adapt, not trusted executable magic.
+- A skill can coordinate MCP tools, local tools, or other skills.
+- Installing a skill does not grant new credentials or MCP permissions.
+
+Return to the [README](README.md) for reference links and next steps.

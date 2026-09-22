@@ -1,4 +1,3 @@
-
 # Instructions for coding agents
 
 This repository is a tutorial to help developers use MCP servers.

@@ -410,7 +410,6 @@ FodyWeavers.xsd
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
-!.vscode/mcp.json
 !.vscode/extensions.json
 !.vscode/*.code-snippets
 
