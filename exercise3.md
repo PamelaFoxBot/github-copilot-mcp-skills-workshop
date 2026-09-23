@@ -1,168 +1,126 @@
-# Exercise 3: Use project and installed skills
+# Exercise 3: Use the GitHub MCP server
 
-In Exercise 2, you used GitHub MCP tools to repair a quiz issue and open a pull
-request. In this exercise, choose one or more of the following activities to
-explore project, installed, client-provided, and custom skills.
+In this exercise, you will connect to the [GitHub MCP server](https://github.com/github/github-mcp-server), which gives Copilot access to GitHub repositories, issues, pull requests, and more. Unlike the Microsoft Learn server from Exercise 2, this server requires authentication.
 
 ## Contents
 
-- [Use a project skill](#use-a-project-skill)
-- [Install a third-party skill](#install-a-third-party-skill)
-- [Explore skills provided by your Copilot client](#explore-skills-provided-by-your-copilot-client)
-- [Create your own project skill](#create-your-own-project-skill)
-- [What to observe](#what-to-observe)
+- [Step 1: Connect GitHub Copilot to GitHub MCP](#step-1-connect-github-copilot-to-github-mcp)
+- [Step 2: Use GitHub MCP](#step-2-use-github-mcp)
+- [Bonus](#bonus)
 
-## Prerequisites
+In Step 1, follow the connection instructions for your Copilot environment. Then everyone completes the shared workflow in Step 2.
 
-- To use `pr-readiness`, complete Exercise 2, keep its pull request URL, and
-  keep GitHub MCP connected with the `repos`, `issues`, and `pull_requests`
-  toolsets.
-- To install a third-party skill, use VS Code, Codespaces, or Copilot CLI with
-  a workspace terminal.
+## Step 1: Connect GitHub Copilot to GitHub MCP
 
-If you used the Copilot app for earlier exercises, open your fork in a
-Codespace to run the skill installer. The app does not provide a workspace
-terminal.
+### GitHub Copilot in VS Code or Codespaces
 
-## Use a project skill
+1. Add the GitHub MCP server alongside Microsoft Learn in `.mcp.json`:
 
-The workshop includes `.github/skills/pr-readiness/SKILL.md`. Open the file and
-inspect its frontmatter and workflow. The skill provides instructions; GitHub
-MCP provides the live tools and authenticated data.
+ ```json
+ {
+   "servers": {
+   "microsoft-learn": {
+   "type": "http",
+   "url": "https://learn.microsoft.com/api/mcp"
+   },
+   "github": {
+   "type": "http",
+   "url": "https://api.githubcopilot.com/mcp/"
+   }
+   }
+ }
+ ```
 
-Start a fresh chat and ask Copilot:
+1. Select **Start** above the GitHub server definition.
+1. When prompted, allow the server to authenticate to GitHub.
+1. Select **Configure Tools** in Copilot Chat and confirm that GitHub tools such as `list_issues`, `get_file_contents`, and `create_pull_request` are available.
 
-```text
-Use the /pr-readiness skill to assess this pull request: <YOUR-PR-URL>
+### GitHub Copilot CLI
 
-Use GitHub MCP for all GitHub data. Show me the readiness report, but do not
-make any GitHub changes.
-```
+The GitHub MCP server is built into Copilot CLI, with a smaller set of tools enabled by default.
 
-If slash invocation is unavailable, ask Copilot to use the repository's
-`pr-readiness` skill by name. Approve the read-only GitHub calls as they appear.
+1. Start Copilot CLI with all GitHub MCP toolsets enabled:
 
-Check that the report:
+ ```bash
+ copilot --enable-all-github-mcp-tools
+ ```
 
-1. Names the correct upstream base and your fork's head branch.
-2. Connects the linked issue requirements to the changed file.
-3. Distinguishes missing checks or reviews from failures.
-4. Claims local validation only when commands actually ran.
+ For additional setup options, see the [Copilot CLI installation guide](https://github.com/github/github-mcp-server/blob/main/docs/installation-guides/install-copilot-cli.md).
 
-## Install a third-party skill
+1. Enter `/mcp show github-mcp-server` and confirm that the built-in server and its tools are available.
 
-[Matt Pocock's skills repository](https://github.com/mattpocock/skills) contains
-small, composable engineering workflows. Its `/grill-me` skill interviews you
-to expose unresolved decisions in a plan or design.
+### GitHub Copilot app
 
-Before installing third-party skills, inspect their source and consider what
-instructions or scripts they contain. In this case, `grill-me` is a user-facing
-wrapper around the companion `grilling` skill, so install both using one of the
-following options.
+Configure the GitHub MCP server with the toolsets needed to research an issue, update your fork, and open a pull request.
 
-### Option A: GitHub CLI
+1. Open the GitHub Copilot app.
+1. Select **Customize** in the sidebar, then select the **MCP** tab.
+1. Open the **Add** menu in the upper-right corner and select **MCP Server**.
+1. Enter `github` for the server name and select **HTTP**.
+1. Enter `https://api.githubcopilot.com/mcp/` for the URL.
+1. Under **Headers**, select **Add header**. Enter `X-MCP-Toolsets` for the header name and `repos,issues,pull_requests` for its value.
+1. Leave the OAuth Client ID and timeout fields at their defaults, then select **Add server**.
+1. Complete GitHub authorization when prompted.
+1. Ask Copilot to verify the available tools:
 
-Skill installation in GitHub CLI is currently in preview. If your version of
-`gh` includes the `gh skills` command, run:
+ ```text
+ Do you have access to the GitHub MCP server? Confirm that you have the list_issues, get_file_contents, and create_pull_request tools.
+ ```
 
-```bash
-gh skills add mattpocock/skills grill-me \
-  --agent github-copilot --scope project
-gh skills add mattpocock/skills grilling \
-  --agent github-copilot --scope project
-```
+## Step 2: Use GitHub MCP
 
-GitHub CLI installs one named skill at a time. `gh skill install` is the
-canonical command; `gh skills add` is its shorter alias.
+This repository has a small quiz script in `src/quiz.py` with known bugs and missing features tracked as GitHub issues. Complete this workflow in the Copilot environment you connected in Step 1.
 
-### Option B: skills.sh CLI
+1. Ask Copilot to list the workshop's open issues:
 
-```bash
-npx --yes skills@latest add mattpocock/skills \
-  --skill grill-me grilling \
-  --agent github-copilot \
-  --copy \
-  --yes
-```
+ ```text
+ List the open issues in pamelafox/github-copilot-mcp-skills-workshop and summarize them.
+ ```
 
-Both options copy the skills into `.agents/skills` and record their source.
-Open both installed `SKILL.md` files and compare their frontmatter and roles:
+1. Ask Copilot to choose an issue:
 
-- `grill-me` is invoked explicitly by the user.
-- `grilling` contains the reusable interview procedure.
+ ```text
+ Which of these issues would be the easiest to fix? Pick one for me.
+ ```
 
-Start a fresh chat and try the installed flow:
+1. Ask Copilot to run the quiz so you can see its behavior:
 
-```text
-Use /grill-me to stress-test this idea: add a timed mode to the MCP quiz.
-Ask the first round of questions, then stop so I can review them.
-```
+ ```text
+ Run the MCP quiz in this repository so I can try it.
+ ```
 
-Notice how one skill can delegate to another. You do not need to implement the
-idea or commit the installed files during this exercise.
+ If Copilot cannot run it in your current environment, use this command in a
+ workspace terminal:
 
-## Explore skills provided by your Copilot client
+ ```bash
+ uv run python src/quiz.py
+ ```
 
-Available skills vary by client, installed extensions or plugins, and version.
-Choose the instructions for your current surface:
+1. Ask Copilot to implement the issue in your fork and create a pull request:
 
-- **VS Code or Codespaces**: Type `/` to browse available skills, or type
-  `/skills` to open **Configure Skills**. Inspect the source of a skill provided
-  by VS Code or an extension, then invoke it on a small task. If `/create-skill`
-  is available, you can use it for the next activity.
-- **Copilot CLI**: Run `/skills list`, then `/skills info SKILL-NAME` to inspect
-  a preinstalled skill and its location. Invoke it with
-  `/SKILL-NAME your task`.
-- **GitHub Copilot app**: Select **Customize**, then **Skills**, to browse the
-  available set. Try a GitHub-provided skill such as `/af` to find a skill for
-  a task. The app's built-in skills differ from those in VS Code and CLI.
+ ```text
+ Fix that issue. Follow these steps:
+ 1. Create a new branch in my fork for the fix.
+ 2. Make only the required change to src/quiz.py.
+ 3. Commit and push the branch.
+ 4. Create a PR to pamelafox/github-copilot-mcp-skills-workshop that references the issue.
+ ```
 
-Do not assume that a skill available in one client exists in another. Compare
-its name, source, purpose, and tools before invoking it.
+ Confirm that the branch and commit target your fork, while the pull request targets `pamelafox/github-copilot-mcp-skills-workshop`.
 
-## Create your own project skill
+1. Open the returned pull request URL and review the changes.
 
-Create `.github/skills/quiz-question-reviewer/SKILL.md`. In VS Code, invoke
-`/create-skill`; in another client, ask Copilot to create the file directly.
-Use this request:
+## Bonus
 
-```text
-Create a project skill named quiz-question-reviewer. It should review a
-multiple-choice MCP quiz question, use Microsoft Learn MCP to verify the fact,
-check that exactly one of four options is correct, assess whether the
-distractors are plausible, and recommend precise revisions. It must not edit
-the quiz unless I explicitly ask.
-```
+If you have more time:
 
-Inspect the generated file. Confirm that the directory matches the skill name,
-the frontmatter includes a specific `name` and `description`, and the body
-defines a repeatable workflow rather than one fixed answer.
+- **Find more quiz projects**: Ask Copilot to search GitHub for quiz apps with features such as randomized question order, difficulty levels, or timed questions. You may see it use the `search_repositories` tool.
+- **Explore a specific project**: Choose one result and ask Copilot to examine its structure and implementation without cloning it. You may see it use the `get_file_contents` tool.
+- **Try another authenticated server**: Connect to another MCP server that uses OAuth:
+  - [Notion MCP](https://developers.notion.com/docs/mcp): search, read, create, and update content in a Notion workspace
+  - [Linear MCP](https://linear.app/docs/mcp): find, create, and update issues, projects, and comments in Linear
+  - [Azure DevOps MCP](https://learn.microsoft.com/azure/devops/mcp-server/mcp-server-overview): query work items, repos, pipelines, and wikis in Azure DevOps
+  - [Work IQ MCP](https://github.com/microsoft/work-iq): search emails, meetings, documents, and Teams messages from Microsoft 365
+  - [Azure MCP](https://learn.microsoft.com/azure/developer/azure-mcp-server/get-started): manage Azure resources, storage, and AI services
 
-Start a fresh chat so Copilot discovers the new skill. In Copilot CLI, you can
-instead run `/skills reload`, followed by
-`/skills info quiz-question-reviewer`. Then try it:
-
-```text
-Use /quiz-question-reviewer to review this question:
-
-Which MCP primitive lets a server expose executable operations?
-A. Tools
-B. Resources
-C. Prompts
-D. Roots
-Correct answer: A
-```
-
-Watch for a Microsoft Learn MCP call and verify that the response separates
-factual evidence from editorial recommendations. Keep or delete the new skill
-after the experiment; do not commit it unless you want it in your fork.
-
-## What to observe
-
-- Repository skills are available to everyone who opens the project.
-- The installer can add selected skills for a specific Copilot host.
-- Skills are files you can inspect and adapt, not trusted executable magic.
-- A skill can coordinate MCP tools, local tools, or other skills.
-- Installing a skill does not grant new credentials or MCP permissions.
-
-Return to the [README](README.md) for reference links and next steps.
+  Browse the [GitHub MCP Registry](https://github.com/mcp) for more server ideas.

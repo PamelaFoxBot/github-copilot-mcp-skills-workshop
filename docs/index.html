@@ -10,7 +10,11 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/a11y-light.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Chewy&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fredoka:wght@500;600&display=swap">
+  <script>
+    const titleLayout = new URLSearchParams(location.search).get('titleLayout');
+    document.documentElement.dataset.titleLayout = ['balanced', 'centered'].includes(titleLayout) ? titleLayout : 'editorial';
+  </script>
   <style>
     :root {
       --deck-ink: #0e1e35;
@@ -24,6 +28,7 @@
       --deck-green: #3ecf70;
       --deck-gold: #b86800;
       --deck-red: #b42318;
+      --deck-pink: #ff32c8;
     }
 
     html,
@@ -33,18 +38,15 @@
 
     .reveal {
       background:
-        linear-gradient(rgba(26, 107, 222, 0.045) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(62, 207, 112, 0.045) 1px, transparent 1px),
-        linear-gradient(180deg, #eaf5fb 0%, #f0f9fe 44%, #f8feff 100%);
-      background-size: 32px 32px, 32px 32px, 100% 100%;
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='56'%3E%3Cpath d='M0 28 C 45 4 135 52 180 28' fill='none' stroke='%231338C9' stroke-opacity='0.06' stroke-width='2'/%3E%3C/svg%3E"),
+        radial-gradient(ellipse 55% 60% at 6% 10%, rgba(200, 152, 253, 0.55), transparent 70%),
+        radial-gradient(ellipse 50% 55% at 96% 16%, rgba(112, 213, 255, 0.5), transparent 70%),
+        radial-gradient(ellipse 60% 55% at 88% 96%, rgba(138, 108, 245, 0.38), transparent 70%),
+        radial-gradient(ellipse 50% 50% at 12% 92%, rgba(112, 213, 255, 0.42), transparent 70%),
+        linear-gradient(135deg, #f3edff 0%, #eef4ff 50%, #e8f8ff 100%);
+      background-size: 180px 56px, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
       font-family: 'Atkinson Hyperlegible', sans-serif;
       color: var(--deck-ink);
-    }
-
-    .reveal.title-slide-active {
-      background-image: url('copilotdaybg.webp');
-      background-size: cover;
-      background-position: center;
     }
 
     .reveal .slides section {
@@ -66,11 +68,12 @@
 
     .reveal h1,
     .reveal h2,
-    .reveal h3 {
+    .reveal h3,
+    .reveal h4 {
       margin-top: 0;
       color: var(--deck-heading);
-      font-family: 'Chewy', sans-serif;
-      font-weight: 400;
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 600;
       letter-spacing: 0;
       text-transform: none;
       text-shadow: 0 0 10px rgba(26, 107, 222, 0.18);
@@ -144,6 +147,72 @@
     .reveal th { background: rgba(62, 207, 112, 0.16); }
     .reveal tbody tr:nth-child(even) { background: rgba(26, 107, 222, 0.045); }
 
+    .reveal table.agenda {
+      border: 1px solid #d0d7de;
+      border-radius: 8px;
+      border-collapse: separate;
+      border-spacing: 0;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .reveal table.agenda th,
+    .reveal table.agenda td {
+      padding: 0.3em 0.6em;
+      border: 0;
+      border-bottom: 1px solid #d0d7de;
+      vertical-align: middle;
+    }
+
+    .reveal table.agenda tbody tr:last-child td { border-bottom: 0; }
+    .reveal table.agenda th { background: #f6f8fa; font-weight: 700; }
+    .reveal table.agenda tbody tr:nth-child(even) { background: transparent; }
+    .reveal table.agenda td:first-child {
+      width: 18%;
+      white-space: nowrap;
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 500;
+    }
+    .reveal table.agenda td:nth-child(2) { width: 24%; }
+
+    .reveal .pill {
+      display: inline-block;
+      min-width: 8.2em;
+      padding: 0.12em 0.9em;
+      border-radius: 999px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .reveal .pill-welcome { background: #eaeef2; color: #424a53; }
+    .reveal .pill-presentation { background: #ddf4ff; color: #0550ae; }
+    .reveal .pill-exercise { background: #dafbe1; color: #116329; }
+
+    .reveal .about-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 300px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .reveal .about-layout img {
+      width: 300px;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .reveal .about-layout .kicker {
+      margin: 0 0 4px;
+      color: var(--deck-muted);
+      font-size: 0.65em;
+    }
+
+    .reveal .about-layout h2 { margin-bottom: 16px; }
+    .reveal .about-layout .about-role,
+    .reveal .about-layout .about-history { margin: 0 0 16px; }
+    .reveal .about-links td:first-child { width: 110px; font-weight: 700; }
+
     .reveal .two-column,
     .reveal .three-column {
       display: grid;
@@ -153,6 +222,214 @@
 
     .reveal .two-column { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .reveal .three-column { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .reveal .four-column {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .reveal .four-column .box { min-height: 0; padding: 12px 14px; }
+    .reveal .four-column .box h4 { margin-bottom: 0.3em; font-size: 0.74em; }
+    .reveal .four-column .box p { margin: 0 0 0.4em; font-size: 0.56em; line-height: 1.3; }
+    .reveal .four-column .box code { font-size: 0.92em; }
+
+    .reveal .decision {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 56px 300px;
+      gap: 14px 10px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .reveal .decision-q {
+      padding: 12px 18px;
+      border: 1px solid rgba(26, 107, 222, 0.22);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.82);
+      font-size: 0.66em;
+      line-height: 1.25;
+    }
+
+    .reveal .decision-arrow {
+      color: var(--deck-heading);
+      font-size: 0.5em;
+      font-weight: 700;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .reveal .decision-a {
+      padding: 12px 16px;
+      border-radius: 999px;
+      color: #fff;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.66em;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .reveal .decision-a.mcp { background: #1338C9; }
+    .reveal .decision-a.skill { background: #18864b; }
+    .reveal .decision-a.both { background: #6b4fd8; }
+    .reveal .decision-a.plugin { background: #b86800; }
+
+    .reveal .media-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .reveal .media-layout img {
+      width: 340px;
+      margin: 0;
+      border: 1px solid #d0d7de;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(26, 107, 222, 0.14);
+    }
+
+    .reveal ul.tight li,
+    .reveal ol.tight li { margin-bottom: 0.28em; }
+    .reveal .lead { font-size: 0.84em; }
+
+    .reveal .agent-uses {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 480px;
+      gap: 32px;
+      align-items: start;
+    }
+
+    .reveal .agent-categories { display: grid; gap: 16px; }
+    .reveal .agent-categories .box { min-height: 0; }
+
+    .reveal ul.lang-logos {
+      margin: 0.4em 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .reveal .step {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 12px;
+      align-items: center;
+      margin: 10px 0;
+    }
+
+    .reveal .step-number {
+      display: grid;
+      width: 46px;
+      height: 46px;
+      place-items: center;
+      border-radius: 50%;
+      background: #1338C9;
+      color: #fff;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.72em;
+      font-weight: 600;
+    }
+
+    .reveal .step div:last-child {
+      font-size: 0.7em;
+      line-height: 1.25;
+    }
+
+    .reveal section.compact-code pre code { font-size: 0.82em; }
+
+    .reveal .approval-layout {
+      display: grid;
+      grid-template-columns: 530px minmax(0, 1fr);
+      gap: 40px;
+      align-items: center;
+    }
+
+    .reveal .approval-shot {
+      position: relative;
+      margin-left: 30px;
+    }
+
+    .reveal .approval-shot img {
+      display: block;
+      width: 100%;
+      margin: 0;
+      border: 1px solid #d0d7de;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(26, 107, 222, 0.14);
+    }
+
+    .reveal .approval-marker {
+      position: absolute;
+      left: -42px;
+      display: grid;
+      width: 30px;
+      height: 30px;
+      place-items: center;
+      transform: translateY(-50%);
+      border: 3px solid #fff;
+      border-radius: 50%;
+      background: #1338C9;
+      color: #fff;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.5em;
+      font-weight: 600;
+      box-shadow: 0 2px 6px rgba(11, 58, 124, 0.3);
+    }
+
+    .reveal ul.lang-logos li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 0.45em;
+      font-size: 0.66em;
+    }
+
+    .reveal ul.lang-logos img {
+      width: 40px;
+      height: 40px;
+      margin: 0;
+      object-fit: contain;
+    }
+
+    .reveal .agent-uses img {
+      width: 480px;
+      margin: 0;
+      border: 1px solid #d0d7de;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(26, 107, 222, 0.14);
+    }
+
+    .reveal .client-panel {
+      box-sizing: border-box;
+      min-height: 330px;
+      padding: 12px 14px;
+      border: 1px solid rgba(33, 232, 243, 0.48);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.58);
+    }
+
+    .reveal .client-panel h4 {
+      margin: 0 0 0.45em;
+      font-size: 0.78em;
+    }
+
+    .reveal .client-panel p {
+      margin: 0 0 0.5em;
+      font-size: 0.58em;
+      line-height: 1.18;
+    }
+
+    .reveal .client-shot {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      object-fit: contain;
+      object-position: top center;
+      border: 1px solid #111;
+      background: #fff;
+    }
 
     .reveal .box {
       min-height: 170px;
@@ -231,8 +508,208 @@
 
     .reveal section.heading-only.title-slide {
       align-items: flex-start;
-      padding: 54px 49% 100px 72px;
+      padding: 54px 40% 100px 72px;
       text-align: left;
+    }
+
+    .reveal section.title-slide .title-logos {
+      position: absolute;
+      top: 115px;
+      right: 72px;
+      width: 420px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 34px;
+    }
+
+    .reveal section.title-slide .mcp-mark { width: 210px; }
+    .reveal section.title-slide .copilot-mascot { width: 280px; }
+    .reveal section.title-slide .copilot-mascot-profile { display: none; }
+    .reveal section.title-slide .title-logos img { margin: 0; }
+    .reveal section.title-slide h1 span { display: block; }
+    .reveal section.title-slide .title-wave { display: none; }
+
+    html[data-title-layout="balanced"] .reveal.title-slide-active {
+      background: linear-gradient(150deg, #f8feff 0%, #eaf5fb 100%);
+    }
+
+    html[data-title-layout="balanced"] .reveal section.heading-only.title-slide {
+      justify-content: flex-start;
+      padding: 96px 45% 100px 80px;
+    }
+
+    html[data-title-layout="balanced"] .reveal section.title-slide h1 {
+      width: 100%;
+      margin: 0;
+      line-height: 1.06;
+    }
+
+    html[data-title-layout="balanced"] .reveal section.title-slide .title-intro { font-size: 0.52em; }
+    html[data-title-layout="balanced"] .reveal section.title-slide .title-subject {
+      margin-top: 28px;
+      font-size: 1.12em;
+    }
+
+    html[data-title-layout="balanced"] .reveal section.title-slide .title-with {
+      margin-top: 76px;
+      font-size: 0.55em;
+    }
+
+    html[data-title-layout="balanced"] .reveal section.title-slide .title-logos {
+      top: 150px;
+      right: 70px;
+      gap: 22px;
+    }
+
+    html[data-title-layout="balanced"] .reveal section.title-slide .mcp-mark { width: 215px; }
+    html[data-title-layout="balanced"] .reveal section.title-slide .copilot-mascot { width: 250px; }
+    html[data-title-layout="balanced"] .reveal section.title-slide p:first-of-type {
+      position: absolute;
+      bottom: 136px;
+      left: 80px;
+      width: auto;
+      margin: 0;
+    }
+
+    html[data-title-layout="balanced"] .reveal section.title-slide .workshop-url {
+      bottom: 83px;
+      left: 80px;
+    }
+
+    html[data-title-layout="centered"] .reveal.title-slide-active {
+      background: linear-gradient(180deg, #f8feff 0%, #eaf5fb 100%);
+    }
+
+    html[data-title-layout="centered"] .reveal section.heading-only.title-slide {
+      align-items: center;
+      justify-content: flex-start;
+      padding: 0 72px;
+      text-align: center;
+    }
+
+    html[data-title-layout="centered"] .reveal section.title-slide h1 {
+      margin: 0;
+      line-height: 1.05;
+    }
+
+    html[data-title-layout="centered"] .reveal section.title-slide h1 span {
+      position: absolute;
+      right: 72px;
+      left: 72px;
+    }
+
+    html[data-title-layout="centered"] .reveal section.title-slide .title-intro {
+      top: 62px;
+      font-size: 0.55em;
+    }
+
+    html[data-title-layout="centered"] .reveal section.title-slide .title-subject {
+      top: 118px;
+      font-size: 1.34em;
+    }
+
+    html[data-title-layout="centered"] .reveal section.title-slide .title-with {
+      top: 550px;
+      font-size: 0.54em;
+    }
+
+    html[data-title-layout="centered"] .reveal section.title-slide .title-logos {
+      top: 230px;
+      right: auto;
+      left: 50%;
+      width: 280px;
+      gap: 4px;
+      transform: translateX(-50%);
+    }
+
+    html[data-title-layout="centered"] .reveal section.title-slide .mcp-mark { width: 145px; }
+    html[data-title-layout="centered"] .reveal section.title-slide .copilot-mascot { width: 190px; }
+    html[data-title-layout="centered"] .reveal section.title-slide p:first-of-type {
+      position: absolute;
+      right: 72px;
+      bottom: 78px;
+      left: 72px;
+      margin: 0;
+    }
+
+    html[data-title-layout="centered"] .reveal section.title-slide .workshop-url {
+      right: 72px;
+      bottom: 30px;
+      left: 72px;
+      margin: 0;
+    }
+
+    html[data-title-layout="editorial"] .reveal.title-slide-active {
+      background: #f8feff;
+    }
+
+    html[data-title-layout="editorial"] .reveal section.title-slide .title-wave {
+      display: block;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      pointer-events: none;
+    }
+
+    html[data-title-layout="editorial"] .reveal section.heading-only.title-slide {
+      justify-content: flex-start;
+      padding: 0 80px;
+    }
+
+    html[data-title-layout="editorial"] .reveal section.title-slide h1 {
+      width: 780px;
+      margin: 68px 0 0;
+      font-size: 1.55em;
+      line-height: 1.05;
+    }
+
+    html[data-title-layout="editorial"] .reveal section.title-slide h1::after {
+      content: "";
+      display: block;
+      width: 690px;
+      height: 4px;
+      margin-top: 20px;
+      background: var(--deck-blue);
+    }
+
+    html[data-title-layout="editorial"] .reveal section.title-slide .title-logos {
+      top: 70px;
+      right: 80px;
+      width: 350px;
+      gap: 75px;
+    }
+
+    html[data-title-layout="editorial"] .reveal section.title-slide .mcp-mark { width: 190px; }
+    html[data-title-layout="editorial"] .reveal section.title-slide .copilot-mascot { display: none; }
+    html[data-title-layout="editorial"] .reveal section.title-slide .copilot-mascot-profile {
+      display: block;
+      width: 280px;
+      transform: scaleX(-1);
+    }
+    html[data-title-layout="editorial"] .reveal section.title-slide p:first-of-type {
+      position: absolute;
+      bottom: 145px;
+      left: 80px;
+      width: auto;
+      margin: 0;
+    }
+
+    html[data-title-layout="editorial"] .reveal section.title-slide .workshop-url {
+      bottom: 82px;
+      left: 80px;
+    }
+
+    .reveal section.title-slide .workshop-url {
+      position: absolute;
+      right: 72px;
+      bottom: 155px;
+      left: 72px;
+      width: auto;
+      font-size: 0.64em;
+      white-space: nowrap;
     }
 
     .reveal section.heading-only h1,
@@ -263,43 +740,105 @@
   <div class="reveal">
     <div class="slides">
       <section class="heading-only title-slide">
-        <h1>Exploring MCP Servers<br>with GitHub Copilot</h1>
+        <svg class="title-wave" viewBox="0 0 1280 720" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M 2400 -600 L 1330 -600 C 1180 -330 1060 -84 1016 -40 C 1009 -33 988 -15 976 0 C 963 15 951 32 940 48 C 929 64 915 80 907 96 C 899 112 894 128 892 144 C 890 160 892 176 895 192 C 898 208 906 224 908 240 C 910 256 911 272 908 288 C 905 304 897 320 890 336 C 882 352 871 368 864 384 C 857 400 852 416 849 432 C 846 448 845 464 846 480 C 847 496 851 512 855 528 C 860 544 865 560 874 576 C 882 592 894 608 908 624 C 921 640 938 656 952 672 C 966 688 978 705 992 720 C 1005 735 1025 753 1032 760 C 1076 804 1200 1060 1330 1320 L 2400 1320 Z" fill="#eaf5fb"/>
+          <g fill="none" stroke-linecap="round">
+            <path d="M 1280 -560 C 1277 -553 1266 -533 1258 -520 C 1251 -507 1244 -493 1236 -480 C 1229 -467 1221 -453 1214 -440 C 1206 -427 1199 -413 1192 -400 C 1185 -387 1178 -373 1171 -360 C 1164 -347 1158 -333 1151 -320 C 1144 -307 1135 -293 1128 -280 C 1121 -267 1115 -253 1108 -240 C 1101 -227 1092 -213 1085 -200 C 1078 -187 1071 -173 1063 -160 C 1056 -147 1048 -133 1039 -120 C 1031 -107 1025 -93 1014 -80 C 1004 -67 990 -53 978 -40 C 966 -27 953 -13 943 0 C 932 13 923 27 914 40 C 904 53 893 67 886 80 C 879 93 874 107 870 120 C 867 133 865 147 865 160 C 865 173 867 187 870 200 C 873 213 880 227 882 240 C 884 253 885 267 883 280 C 881 293 875 307 869 320 C 863 333 853 347 847 360 C 840 373 834 387 830 400 C 826 413 823 427 821 440 C 820 453 819 467 820 480 C 821 493 823 507 826 520 C 829 533 833 547 838 560 C 843 573 849 587 858 600 C 866 613 876 627 887 640 C 899 653 912 667 924 680 C 936 693 946 707 958 720 C 969 733 982 747 994 760 C 1007 773 1020 787 1030 800 C 1040 813 1047 827 1055 840 C 1063 853 1071 867 1078 880 C 1086 893 1093 907 1100 920 C 1107 933 1114 947 1120 960 C 1127 973 1134 987 1141 1000 C 1148 1013 1155 1027 1162 1040 C 1169 1053 1176 1067 1182 1080 C 1189 1093 1195 1107 1201 1120 C 1208 1133 1215 1147 1221 1160 C 1228 1173 1235 1187 1241 1200 C 1248 1213 1255 1227 1262 1240 C 1269 1253 1279 1273 1282 1280" stroke="#70D5FF" stroke-width="6" stroke-opacity="0.9"/>
+            <path d="M 1247 -560 C 1243 -553 1232 -533 1225 -520 C 1218 -507 1211 -493 1204 -480 C 1196 -467 1190 -453 1182 -440 C 1175 -427 1168 -413 1161 -400 C 1153 -387 1146 -373 1139 -360 C 1132 -347 1125 -333 1118 -320 C 1111 -307 1103 -293 1096 -280 C 1089 -267 1082 -253 1075 -240 C 1068 -227 1060 -213 1053 -200 C 1045 -187 1038 -173 1030 -160 C 1023 -147 1015 -133 1007 -120 C 998 -107 991 -93 979 -80 C 968 -67 951 -53 939 -40 C 927 -27 918 -13 908 0 C 898 13 888 27 879 40 C 870 53 861 67 855 80 C 849 93 844 107 841 120 C 838 133 837 147 837 160 C 837 173 839 187 842 200 C 844 213 851 227 853 240 C 855 253 857 267 854 280 C 852 293 844 307 837 320 C 831 333 822 347 816 360 C 810 373 805 387 801 400 C 797 413 795 427 793 440 C 792 453 791 467 792 480 C 793 493 795 507 798 520 C 800 533 804 547 809 560 C 813 573 818 587 826 600 C 833 613 841 627 851 640 C 861 653 874 667 886 680 C 897 693 910 707 922 720 C 933 733 943 747 955 760 C 968 773 984 787 995 800 C 1007 813 1014 827 1022 840 C 1031 853 1038 867 1046 880 C 1053 893 1061 907 1068 920 C 1075 933 1082 947 1089 960 C 1096 973 1102 987 1109 1000 C 1116 1013 1124 1027 1130 1040 C 1137 1053 1143 1067 1150 1080 C 1156 1093 1163 1107 1170 1120 C 1177 1133 1184 1147 1191 1160 C 1197 1173 1204 1187 1211 1200 C 1217 1213 1224 1227 1230 1240 C 1237 1253 1247 1273 1250 1280" stroke="#C898FD" stroke-width="5" stroke-opacity="0.75"/>
+            <path d="M 1212 -560 C 1209 -553 1198 -533 1190 -520 C 1183 -507 1176 -493 1169 -480 C 1162 -467 1155 -453 1148 -440 C 1141 -427 1134 -413 1127 -400 C 1119 -387 1112 -373 1105 -360 C 1098 -347 1091 -333 1083 -320 C 1076 -307 1069 -293 1062 -280 C 1055 -267 1048 -253 1041 -240 C 1033 -227 1026 -213 1019 -200 C 1011 -187 1003 -173 996 -160 C 988 -147 981 -133 971 -120 C 961 -107 948 -93 936 -80 C 924 -67 911 -53 900 -40 C 889 -27 881 -13 871 0 C 861 13 851 27 842 40 C 834 53 828 67 822 80 C 817 93 813 107 811 120 C 808 133 807 147 807 160 C 807 173 809 187 811 200 C 813 213 819 227 821 240 C 823 253 826 267 823 280 C 820 293 809 307 803 320 C 796 333 788 347 783 360 C 778 373 773 387 770 400 C 767 413 764 427 763 440 C 762 453 761 467 762 480 C 763 493 764 507 767 520 C 769 533 773 547 777 560 C 781 573 786 587 792 600 C 798 613 805 627 814 640 C 823 653 834 667 845 680 C 857 693 870 707 882 720 C 894 733 904 747 915 760 C 927 773 940 787 952 800 C 964 813 977 827 987 840 C 997 853 1003 867 1011 880 C 1019 893 1026 907 1033 920 C 1041 933 1048 947 1055 960 C 1062 973 1069 987 1075 1000 C 1082 1013 1089 1027 1096 1040 C 1103 1053 1109 1067 1116 1080 C 1123 1093 1130 1107 1137 1120 C 1144 1133 1150 1147 1157 1160 C 1163 1173 1170 1187 1176 1200 C 1183 1213 1190 1227 1196 1240 C 1203 1253 1213 1273 1216 1280" stroke="#8A6CF5" stroke-width="4" stroke-opacity="0.55"/>
+          </g>
+        </svg>
+        <h1><span class="title-intro">Exploring</span> <span class="title-subject">MCP Servers</span> <span class="title-with">with GitHub Copilot</span></h1>
         <p style="margin-top: 32px;"><strong>Pamela Fox</strong></p>
-        <p style="font-size: 0.64em;"><a href="https://pamelafox.github.io/github-copilot-mcp-skills-workshop/">pamelafox.github.io/github-copilot-mcp-skills-workshop</a></p>
+        <p class="workshop-url"><a href="https://pamelafox.github.io/github-copilot-mcp-skills-workshop/">pamelafox.github.io/github-copilot-mcp-skills-workshop</a></p>
+        <div class="title-logos">
+          <img class="mcp-mark" src="mcp-copilot-colors.svg" alt="Model Context Protocol logo in blue, cyan, and lavender">
+          <img class="copilot-mascot" src="copilot-mascot.png" alt="GitHub Copilot mascot">
+          <img class="copilot-mascot-profile" src="copilot-mascot-profile.png" alt="GitHub Copilot mascot facing the title">
+        </div>
         <aside class="notes">Set the expectation: participants will connect and use existing MCP servers. They will not build an MCP server.</aside>
       </section>
 
       <section>
-        <h3>About me</h3>
-        <img src="photo_pamela_olaf.jpg" alt="Pamela Fox smiling beside an Olaf statue" style="float:right; height:300px; border-radius: 6px;">
-        <p>Python Cloud Advocate at Microsoft</p>
-        <p>Formerly: UC Berkeley, Coursera, Khan Academy, Google</p>
-        <p>Find me at <a href="https://www.pamelafox.org">pamelafox.org</a> and <a href="https://github.com/pamelafox">github.com/pamelafox</a>.</p>
+        <div class="about-layout">
+          <div>
+            <p class="kicker">About me</p>
+            <h2>Pamela Fox</h2>
+            <p class="about-role">Principal Cloud Advocate at Microsoft / GitHub</p>
+            <p class="about-history">Formerly: UC Berkeley, Coursera,<br>Khan Academy, Google</p>
+            <table class="about-links">
+              <tbody>
+                <tr><td>Twitter</td><td><a href="https://twitter.com/pamelafox" target="_blank" rel="noopener noreferrer">🔗 @pamelafox</a></td></tr>
+                <tr><td>LinkedIn</td><td><a href="https://www.linkedin.com/in/pamela-s-fox/" target="_blank" rel="noopener noreferrer">🔗 linkedin.com/in/pamela-s-fox</a></td></tr>
+                <tr><td>GitHub</td><td><a href="https://github.com/pamelafox" target="_blank" rel="noopener noreferrer">🔗 github.com/pamelafox</a></td></tr>
+                <tr><td>Website</td><td><a href="https://pamelafox.org" target="_blank" rel="noopener noreferrer">🔗 pamelafox.org</a></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <img src="photo_pamela_olaf.jpg" alt="Pamela Fox smiling beside an Olaf statue">
+        </div>
       </section>
 
       <section>
-        <h3>Today's 120-minute agenda</h3>
-        <table>
-          <thead><tr><th>Part</th><th>Time</th><th>Outcome</th></tr></thead>
+        <h3>About you</h3>
+        <p>Turn to your neighbor and introduce yourself:</p>
+        <ul>
+          <li>Name</li>
+          <li>Location</li>
+          <li>What sessions have you liked so far at the conference?</li>
+          <li>What's your favorite coding agent or model?</li>
+          <li>Make up a new meaning for "<strong>MCP</strong>" (e.g. "<strong>M</strong>ore <strong>C</strong>offee <strong>P</strong>lease")</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Today's agenda</h3>
+        <table class="agenda">
+          <thead><tr><th>Time</th><th>Format</th><th>Activity</th></tr></thead>
           <tbody>
-            <tr><td>Welcome</td><td>4 min</td><td>Workshop goals and roadmap</td></tr>
-            <tr><td>Exercise 0</td><td>20 min</td><td>Fork, set up the environment, and verify Copilot</td></tr>
-            <tr><td>MCP concepts</td><td>10 min</td><td>Understand hosts, clients, servers, and capabilities</td></tr>
-            <tr><td>Exercise 1</td><td>15 min</td><td>Connect and inspect a public server</td></tr>
-            <tr><td>Authenticated MCP</td><td>10 min</td><td>Connect GitHub and inspect permissions</td></tr>
-            <tr><td>Exercise 2</td><td>29 min</td><td>Repair a quiz issue and open a pull request</td></tr>
-            <tr><td>Break</td><td>5 min</td><td></td></tr>
-            <tr><td>Agent skills</td><td>6 min</td><td>Understand portable, on-demand workflows</td></tr>
-            <tr><td>Exercise 3</td><td>19 min</td><td>Use project and installed skills</td></tr>
-            <tr><td>Wrap-up</td><td>2 min</td><td>Apply least-privilege habits</td></tr>
+            <tr><td>11:00–11:15</td><td><span class="pill pill-welcome">Welcome</span></td><td>Introductions, GitHub Copilot, and Codespaces</td></tr>
+            <tr><td>11:15–11:25</td><td><span class="pill pill-exercise">Exercise</span></td><td>Set up environment and GitHub Copilot</td></tr>
+            <tr><td>11:25–11:45</td><td><span class="pill pill-presentation">Presentation</span></td><td>MCP 101: agents, hosts, clients, and servers</td></tr>
+            <tr><td>11:45–12:00</td><td><span class="pill pill-exercise">Exercise</span></td><td>Connect and inspect a public server</td></tr>
+            <tr><td>12:00–12:10</td><td><span class="pill pill-presentation">Presentation</span></td><td>Authenticated MCP servers: sign-in and permissions</td></tr>
+            <tr><td>12:10–12:35</td><td><span class="pill pill-exercise">Exercise</span></td><td>Repair a quiz issue and open a pull request</td></tr>
+            <tr><td>12:35–12:40</td><td><span class="pill pill-presentation">Presentation</span></td><td>Agent skills: portable, on-demand workflows</td></tr>
+            <tr><td>12:40–12:55</td><td><span class="pill pill-exercise">Exercise</span></td><td>Use project and installed skills</td></tr>
+            <tr><td>12:55–1:00</td><td><span class="pill pill-presentation">Presentation</span></td><td>Wrap-up: apply least-privilege habits</td></tr>
           </tbody>
         </table>
       </section>
 
       <section>
-        <span class="time">20 min</span>
-        <h3>Exercise 0: environment and Copilot</h3>
-        <p><a href="https://github.com/pamelafox/github-copilot-mcp-skills-workshop/blob/main/exercise0.md"><code>exercise0.md</code></a></p>
+        <h3>GitHub Copilot, wherever you work</h3>
+        <div class="two-column">
+          <div class="box"><h4>VS Code</h4><p>Chat and agent mode in your editor, right next to your code.</p></div>
+          <div class="box"><h4>Copilot CLI</h4><p>An agent in your terminal that reads files and runs commands.</p></div>
+          <div class="box"><h4>Copilot app</h4><p>A standalone app for working with Copilot outside the editor.</p></div>
+          <div class="box"><h4>Cloud agents</h4><p>Assign a task on GitHub, and Copilot works in the cloud and opens a pull request.</p></div>
+        </div>
+        <div class="callout">Today, you'll use either VS Code, Copilot CLI, or the Copilot app.<br>Try Cloud Agents on your own later.</div>
+      </section>
+
+      <section>
+        <h3>GitHub Codespaces</h3>
+        <div class="media-layout">
+          <ul>
+            <li>A cloud development environment with VS Code in your browser</li>
+            <li>Built from the repository's dev container: Python, uv, dependencies, and extensions are ready to go</li>
+            <li>Nothing to install on your laptop</li>
+            <li>Personal accounts include a free monthly quota</li>
+            <li>Use VS Code or Copilot CLI inside it; the Copilot app can't be used in a codespace</li>
+          </ul>
+          <img src="screenshot_codespaces_open.png" alt="GitHub Code menu with the Codespaces tab and a Create codespace on main button">
+        </div>
+        <div class="callout"><strong>Recommended for today:</strong> fork the repo, then select <strong>Code → Codespaces → Create codespace on main</strong>.</div>
+      </section>
+
+      <section>
+        <span class="time">10 min</span>
+        <h3>Exercise 1: Set up environment and Copilot</h3>
+        <p><a href="https://github.com/pamelafox/github-copilot-mcp-skills-workshop/blob/main/exercise1.md"><code>exercise1.md</code></a></p>
         <ol>
           <li>Fork the workshop repository into your account.</li>
           <li>Choose Codespaces, a Dev Container, or a local environment.</li>
@@ -309,45 +848,456 @@
         </ol>
       </section>
 
-      <section class="heading-only"><h2>MCP concepts</h2></section>
+      <section class="heading-only"><h2>MCP 101</h2></section>
 
       <section>
-        <h3>Why coding agents need tools</h3>
-        <div class="flow">
-          <div class="node">Your goal</div><div class="arrow">&rarr;</div>
-          <div class="node">Language model chooses a tool</div><div class="arrow">&rarr;</div>
-          <div class="node action">Agent runtime executes it</div><div class="arrow">&rarr;</div>
-          <div class="node">Result becomes context</div>
+        <h3>AI agents</h3>
+        <div style="display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 28px; align-items: start;">
+          <div style="border: 1px solid rgba(33, 232, 243, 0.5); border-radius: 8px; background: rgba(255, 255, 255, 0.62); padding: 10px 16px; box-sizing: border-box;">
+            <div style="font-size: 0.5em; font-weight: 700; color: var(--deck-heading); margin-bottom: 2px;">Agent loop</div>
+            <svg viewBox="0 0 480 350" role="img" aria-label="Agent loop from user query to LLM, tools, and goal" style="width: 100%; max-height: 258px; height: auto; display: block;">
+              <defs>
+                <marker id="agent-arrow" markerWidth="7" markerHeight="7" refX="6" refY="2.5" orient="auto" markerUnits="strokeWidth">
+                  <path d="M0,0 L0,5 L7,2.5 z" fill="#32115f"></path>
+                </marker>
+              </defs>
+              <rect x="54" y="18" width="142" height="62" rx="8" fill="#fffaf1" stroke="#ffd66b" stroke-width="3"></rect>
+              <text x="125" y="57" text-anchor="middle" font-size="22" font-weight="700" fill="#20152f">User query</text>
+              <line x1="125" y1="80" x2="125" y2="134" stroke="#32115f" stroke-width="4" marker-end="url(#agent-arrow)"></line>
+              <rect x="54" y="138" width="142" height="62" rx="6" fill="#5f51bd"></rect>
+              <text x="125" y="177" text-anchor="middle" font-size="26" font-weight="700" fill="#fff">LLM</text>
+              <line x1="125" y1="200" x2="125" y2="268" stroke="#32115f" stroke-width="4" marker-end="url(#agent-arrow)"></line>
+              <rect x="54" y="272" width="142" height="62" rx="8" fill="rgba(255, 50, 200, 0.1)" stroke="#ff32c8" stroke-width="3"></rect>
+              <text x="125" y="311" text-anchor="middle" font-size="22" font-weight="700" fill="#20152f">Goal</text>
+              <rect x="297" y="138" width="142" height="62" rx="10" fill="#eefbff" stroke="#21e8f3" stroke-width="3"></rect>
+              <text x="368" y="177" text-anchor="middle" font-size="24" font-weight="700" fill="#20152f">Tools</text>
+              <path d="M196 160 C230 115, 265 125, 294 145" fill="none" stroke="#32115f" stroke-width="4" marker-end="url(#agent-arrow)"></path>
+              <path d="M294 193 C265 213, 230 223, 196 178" fill="none" stroke="#32115f" stroke-width="4" marker-end="url(#agent-arrow)"></path>
+            </svg>
+          </div>
+          <div>
+            <p style="margin-top: 0; margin-bottom: 0.5em;">An <strong>AI agent</strong> uses an <strong>LLM</strong> to run <strong>tools</strong> in a loop to achieve a <strong>goal</strong>.</p>
+            <p style="margin-top: 0.65em; margin-bottom: 0.2em;">Agents are often augmented by:</p>
+            <ul class="tight" style="margin-top: 0;">
+              <li>Context from files, docs, or databases</li>
+              <li>Memory across a session or project</li>
+              <li>Human approvals and feedback</li>
+            </ul>
+          </div>
         </div>
-        <div class="callout"><strong>The model proposes.</strong> The host executes, permissions constrain, and you approve.</div>
-        <aside class="notes">The LLM never directly calls an API. It emits a structured tool request that the runtime decides whether and how to execute.</aside>
+        <p>🔗 <a target="_blank" href="https://simonwillison.net/2025/Sep/18/agents/">Simon Willison on defining agents</a></p>
       </section>
 
       <section>
-        <h3>What MCP standardizes</h3>
-        <div class="flow">
-          <div class="node">You</div><div class="arrow">&rarr;</div>
-          <div class="node action">MCP host<br>GitHub Copilot</div><div class="arrow">&rarr;</div>
-          <div class="node">MCP client</div><div class="arrow">&rarr;</div>
-          <div class="node server">MCP server<br>Learn or GitHub</div>
+        <h3>AI agents are used on a daily basis</h3>
+        <div class="agent-uses">
+          <div class="agent-categories">
+            <div class="box"><h4>Coding agents</h4><p>GitHub Copilot · Claude Code · Codex · Pi</p></div>
+            <div class="box"><h4>Chatbots</h4><p>ChatGPT · M365 Copilot · Gemini</p></div>
+            <div class="box"><h4>Assistants</h4><p>OpenClaw · Hermes · Meta Muse · Grok Bot</p></div>
+          </div>
+          <img src="screenshot_chat_websearch_tools.png" alt="Chat assistant running three web search tool calls before answering a question about a 1990s email program">
         </div>
-        <ul style="margin-top: 34px;">
-          <li>The client initializes a connection and discovers capabilities dynamically.</li>
-          <li>The server publishes schemas that describe names, arguments, and behavior.</li>
-          <li>MCP does not replace authentication, authorization, or user approval.</li>
-        </ul>
-        <aside class="notes">One host can run multiple MCP clients, usually one connection per configured server.</aside>
       </section>
 
       <section>
-        <h3>Servers can expose more than tools</h3>
-        <div class="three-column">
-          <div class="box"><h4>Tools</h4><p>Functions an agent can choose and call with structured arguments.</p><p><strong>Example:</strong> search GitHub issues.</p></div>
-          <div class="box"><h4>Resources</h4><p>Read-only context that a user or client can browse and attach.</p><p><strong>Example:</strong> repository contents.</p></div>
-          <div class="box"><h4>Prompts</h4><p>Reusable prompt templates published by a server.</p><p><strong>Example:</strong> a guided analysis prompt.</p></div>
+        <h3>Build your own agents</h3>
+        <p>You can build your own agents in any language, with frameworks like:</p>
+        <div class="three-column" style="align-items: stretch;">
+          <div class="box"><h4>LangChain</h4>
+            <ul class="lang-logos">
+              <li><img src="logos/logo_python.svg" alt="">Python</li>
+              <li><img src="logos/logo_javascript.svg" alt="">JavaScript</li>
+            </ul>
+          </div>
+          <div class="box"><h4>Microsoft Agent Framework</h4>
+            <ul class="lang-logos">
+              <li><img src="logos/logo_python.svg" alt="">Python</li>
+              <li><img src="logos/logo_dot-net.svg" alt="">.NET</li>
+              <li><img src="logos/logo_go.svg" alt="">Go</li>
+            </ul>
+          </div>
+          <div class="box"><h4>Pydantic AI</h4>
+            <ul class="lang-logos">
+              <li><img src="logos/logo_python.svg" alt="">Python</li>
+            </ul>
+          </div>
         </div>
-        <p class="muted">Support varies by host. Tools are the common denominator.</p>
       </section>
+
+      <section>
+        <h3>The agentic loop in action</h3>
+        <div style="display: grid; grid-template-columns: minmax(0, 0.38fr) minmax(0, 0.62fr); gap: 24px; align-items: start;">
+          <div style="border: 1px solid rgba(33, 232, 243, 0.5); border-radius: 8px; background: rgba(255, 255, 255, 0.62); padding: 10px 16px; box-sizing: border-box;">
+            <div style="font-size: 0.5em; font-weight: 700; color: var(--deck-heading); margin-bottom: 2px;">Agent loop</div>
+            <svg viewBox="0 0 480 350" role="img" aria-label="Agent loop from user query to LLM, tools, and goal" style="width: 100%; max-height: 258px; height: auto; display: block;">
+              <defs>
+                <marker id="agent-arrow-2" markerWidth="7" markerHeight="7" refX="6" refY="2.5" orient="auto" markerUnits="strokeWidth">
+                  <path d="M0,0 L0,5 L7,2.5 z" fill="#32115f"></path>
+                </marker>
+              </defs>
+              <rect x="54" y="18" width="142" height="62" rx="8" fill="#fffaf1" stroke="#ffd66b" stroke-width="3"></rect>
+              <text x="125" y="57" text-anchor="middle" font-size="22" font-weight="700" fill="#20152f">User query</text>
+              <line x1="125" y1="80" x2="125" y2="134" stroke="#32115f" stroke-width="4" marker-end="url(#agent-arrow-2)"></line>
+              <rect x="54" y="138" width="142" height="62" rx="6" fill="#5f51bd"></rect>
+              <text x="125" y="177" text-anchor="middle" font-size="26" font-weight="700" fill="#fff">LLM</text>
+              <line x1="125" y1="200" x2="125" y2="268" stroke="#32115f" stroke-width="4" marker-end="url(#agent-arrow-2)"></line>
+              <rect x="54" y="272" width="142" height="62" rx="8" fill="rgba(255, 50, 200, 0.1)" stroke="#ff32c8" stroke-width="3"></rect>
+              <text x="125" y="311" text-anchor="middle" font-size="22" font-weight="700" fill="#20152f">Goal</text>
+              <rect x="297" y="138" width="142" height="62" rx="10" fill="#eefbff" stroke="#21e8f3" stroke-width="3"></rect>
+              <text x="368" y="177" text-anchor="middle" font-size="24" font-weight="700" fill="#20152f">Tools</text>
+              <path d="M196 160 C230 115, 265 125, 294 145" fill="none" stroke="#32115f" stroke-width="4" marker-end="url(#agent-arrow-2)"></path>
+              <path d="M294 193 C265 213, 230 223, 196 178" fill="none" stroke="#32115f" stroke-width="4" marker-end="url(#agent-arrow-2)"></path>
+            </svg>
+          </div>
+          <div>
+            <div style="display: grid; gap: 12px; font-size: 0.54em; line-height: 1.04;">
+              <div style="display: grid; grid-template-columns: 72px 1fr; gap: 8px; align-items: center;"><strong>User</strong><div style="padding: 6px 9px; border-radius: 7px; background: rgba(255, 214, 107, 0.62); color: #20152f;">Can I reorder my last bakery order for pickup today?</div></div>
+              <div style="display: grid; grid-template-columns: 72px 1fr; gap: 8px; align-items: center;"><strong>LLM</strong><div style="padding: 6px 9px; border-radius: 7px; background: #7357d8; color: white;"><code style="background: transparent; color: white; padding: 0;">find_customer("Pamela")</code></div></div>
+              <div style="display: grid; grid-template-columns: 72px 1fr; gap: 8px; align-items: center;"><strong>Tool result</strong><div style="padding: 6px 9px; border-radius: 7px; background: #c8efff; color: #20152f;">customer_id = "cust_42"</div></div>
+              <div style="display: grid; grid-template-columns: 72px 1fr; gap: 8px; align-items: center;"><strong>LLM</strong><div style="padding: 6px 9px; border-radius: 7px; background: #7357d8; color: white;"><code style="background: transparent; color: white; padding: 0;">get_last_order("cust_42")</code></div></div>
+              <div style="display: grid; grid-template-columns: 72px 1fr; gap: 8px; align-items: center;"><strong>Tool result</strong><div style="padding: 6px 9px; border-radius: 7px; background: #c8efff; color: #20152f;">items = [croissant, baguette]</div></div>
+              <div style="display: grid; grid-template-columns: 72px 1fr; gap: 8px; align-items: center;"><strong>LLM</strong><div style="padding: 6px 9px; border-radius: 7px; background: #7357d8; color: white;"><code style="background: transparent; color: white; padding: 0;">check_inventory(items)</code></div></div>
+              <div style="display: grid; grid-template-columns: 72px 1fr; gap: 8px; align-items: center;"><strong>Tool result</strong><div style="padding: 6px 9px; border-radius: 7px; background: #c8efff; color: #20152f;">croissant yes; baguette sold out</div></div>
+              <div style="display: grid; grid-template-columns: 72px 1fr; gap: 8px; align-items: center;"><strong>LLM</strong><div style="padding: 6px 9px; border-radius: 7px; background: #7357d8; color: white;"><code style="background: transparent; color: white; padding: 0;">find_substitute("baguette")</code></div></div>
+              <div style="display: grid; grid-template-columns: 72px 1fr; gap: 8px; align-items: center;"><strong>Tool result</strong><div style="padding: 6px 9px; border-radius: 7px; background: #c8efff; color: #20152f;">substitute = sourdough</div></div>
+              <div style="display: grid; grid-template-columns: 72px 1fr; gap: 8px; align-items: center;"><strong>Answer</strong><div style="padding: 6px 9px; border-radius: 7px; background: rgba(255, 50, 200, 0.18); color: #20152f;">I can reorder it with sourdough instead. Want me to place it?</div></div>
+            </div>
+          </div>
+        </div>
+        <aside class="notes">
+          The key point is that the model cannot plan every call up front. It needs the customer ID before it can fetch the last order, the order items before it can check inventory, and the sold-out item before it can look for a substitute.
+        </aside>
+      </section>
+
+      <section>
+        <h3>Agents rely on LLM tool-calling</h3>
+        <div style="display: grid; grid-template-columns: minmax(0, 0.48fr) minmax(0, 0.52fr); gap: 34px; align-items: center;">
+          <div>
+            <p class="lead" style="max-width: none; margin-top: 0;">LLMs have been trained to know how to "call tools".</p>
+            <ul class="tight" style="font-size: 0.72em; line-height: 1.22; margin-top: 18px;">
+              <li>LLM sees the available tools and their descriptions.</li>
+              <li>LLM suggests a <strong>tool name</strong> and <strong>arguments</strong>.</li>
+              <li><strong>Agent runtime</strong> runs the actual code.</li>
+              <li>Tool result is sent back to the LLM as context.</li>
+              <li>LLM decides whether to call another tool or answer.</li>
+            </ul>
+            <p style="font-size: 0.72em; line-height: 1.18; margin-top: 18px; padding: 10px 12px; border-left: 5px solid var(--deck-pink); background: rgba(255, 255, 255, 0.58);"><strong>The model does not execute the tool.</strong><br>The runtime does.</p>
+          </div>
+          <svg viewBox="0 0 560 390" role="img" aria-label="LLM suggests a tool call and the agent runtime executes it" style="width: 100%; height: auto; display: block;">
+            <defs>
+              <marker id="tool-call-arrow" markerWidth="6" markerHeight="6" refX="5.4" refY="2.5" orient="auto" markerUnits="strokeWidth">
+                <path d="M0,0 L0,5 L6,2.5 z" fill="#32115f"></path>
+              </marker>
+            </defs>
+            <rect x="30" y="42" width="170" height="58" rx="8" fill="#fffaf1" stroke="#ffd66b" stroke-width="3"></rect>
+            <text x="115" y="78" text-anchor="middle" font-size="22" font-weight="700" fill="#20152f">User request</text>
+            <line x1="200" y1="71" x2="330" y2="71" stroke="#32115f" stroke-width="3" marker-end="url(#tool-call-arrow)"></line>
+            <rect x="330" y="38" width="120" height="66" rx="7" fill="#5f51bd"></rect>
+            <text x="390" y="78" text-anchor="middle" font-size="26" font-weight="700" fill="#fff">LLM</text>
+            <path d="M390 104 L390 140" fill="none" stroke="#32115f" stroke-width="3" marker-end="url(#tool-call-arrow)"></path>
+            <rect x="250" y="140" width="280" height="72" rx="8" fill="#7357d8"></rect>
+            <text x="390" y="170" text-anchor="middle" font-size="19" font-weight="700" fill="#fff">suggested tool call</text>
+            <text x="390" y="196" text-anchor="middle" font-size="17" font-family="monospace" fill="#fff">get_last_order("cust_42")</text>
+            <path d="M390 212 L390 258" fill="none" stroke="#32115f" stroke-width="3" marker-end="url(#tool-call-arrow)"></path>
+            <rect x="250" y="258" width="280" height="70" rx="8" fill="#eefbff" stroke="#21e8f3" stroke-width="3"></rect>
+            <text x="390" y="287" text-anchor="middle" font-size="18" font-weight="700" fill="#20152f">Agent runtime executes tool</text>
+            <line x1="250" y1="293" x2="215" y2="293" stroke="#32115f" stroke-width="3" marker-end="url(#tool-call-arrow)"></line>
+            <rect x="35" y="258" width="180" height="70" rx="8" fill="#eefbff" stroke="#21e8f3" stroke-width="3"></rect>
+            <text x="125" y="288" text-anchor="middle" font-size="19" font-weight="700" fill="#20152f">tool result</text>
+            <text x="125" y="313" text-anchor="middle" font-size="19" font-family="monospace" fill="#20152f">items = [...]</text>
+            <path d="M125 258 C135 190, 230 110, 330 90" fill="none" stroke="#32115f" stroke-width="3" stroke-dasharray="7 7" marker-end="url(#tool-call-arrow)"></path>
+          </svg>
+        </div>
+        <aside class="notes">
+          Emphasize the security and architecture boundary: the LLM produces a structured request for a tool call. The application, framework, or MCP client decides whether to allow it and runs the function. Then the result is added to the conversation for the next model step.
+        </aside>
+      </section>
+
+      <section>
+        <h3>MCP: Model Context Protocol</h3>
+        <p>MCP is the open standard that tells agent runtimes <strong>how to discover and connect to the tools they can call</strong>.</p>
+        <svg viewBox="0 0 900 290" style="width: 100%; margin: 0 auto; display: block;" xmlns="http://www.w3.org/2000/svg">
+          <rect x="340" y="20" width="220" height="60" rx="12" fill="#c9f7ff" stroke="#21e8f3" stroke-width="3"/>
+          <text x="450" y="58" text-anchor="middle" font-family="Inter, sans-serif" font-size="18" font-weight="700" fill="#111827">🤖 AI agent</text>
+          <defs>
+            <marker id="arrowhead2" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="#32115f"/>
+            </marker>
+          </defs>
+          <path d="M380 80 L380 120 L130 120 L130 230" fill="none" stroke="#32115f" stroke-width="2.5" marker-end="url(#arrowhead2)"/>
+          <line x1="450" y1="80" x2="450" y2="230" stroke="#32115f" stroke-width="2.5" marker-end="url(#arrowhead2)"/>
+          <path d="M520 80 L520 120 L770 120 L770 230" fill="none" stroke="#32115f" stroke-width="2.5" marker-end="url(#arrowhead2)"/>
+          <path d="M380 80 L380 120 L130 120 L130 212" fill="none" stroke="#21e8f3" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 20" opacity="0.9">
+            <animate attributeName="stroke-dashoffset" from="0" to="-140" dur="4s" repeatCount="indefinite"/>
+          </path>
+          <line x1="450" y1="80" x2="450" y2="212" stroke="#21e8f3" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 20" opacity="0.9">
+            <animate attributeName="stroke-dashoffset" from="0" to="-100" dur="3.2s" repeatCount="indefinite"/>
+          </line>
+          <path d="M520 80 L520 120 L770 120 L770 212" fill="none" stroke="#21e8f3" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 20" opacity="0.9">
+            <animate attributeName="stroke-dashoffset" from="0" to="-140" dur="3.6s" repeatCount="indefinite"/>
+          </path>
+          <text x="130" y="270" text-anchor="middle" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#111827">🗄️ Database</text>
+          <text x="450" y="270" text-anchor="middle" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#111827">📧 Emails</text>
+          <image href="logos/logo_github.svg" x="732" y="252" width="24" height="24"/>
+          <text x="788" y="270" text-anchor="middle" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#111827">GitHub</text>
+          <g transform="translate(255 120)"><animate attributeName="opacity" values="1;0.88;1" dur="2.2s" repeatCount="indefinite"/><rect x="-30" y="-13" width="60" height="26" rx="13" fill="#effdff" stroke="#00bcd4" stroke-width="2.2"/><text x="0" y="5" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" fill="#006a7c" font-weight="700">MCP</text></g>
+          <g transform="translate(450 146)"><animate attributeName="opacity" values="1;0.88;1" dur="2.2s" begin="0.35s" repeatCount="indefinite"/><rect x="-30" y="-13" width="60" height="26" rx="13" fill="#effdff" stroke="#00bcd4" stroke-width="2.2"/><text x="0" y="5" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" fill="#006a7c" font-weight="700">MCP</text></g>
+          <g transform="translate(645 120)"><animate attributeName="opacity" values="1;0.88;1" dur="2.2s" begin="0.7s" repeatCount="indefinite"/><rect x="-30" y="-13" width="60" height="26" rx="13" fill="#effdff" stroke="#00bcd4" stroke-width="2.2"/><text x="0" y="5" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" fill="#006a7c" font-weight="700">MCP</text></g>
+        </svg>
+        <p>🔗 MCP specification: <a target="_blank" href="https://modelcontextprotocol.io/">modelcontextprotocol.io</a></p>
+      </section>
+
+      <section>
+        <h3>MCP architecture</h3>
+        <svg viewBox="0 0 1100 566" style="width: 100%; margin: -65px auto 0 auto; display: block;" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="serverPanelGradient" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#f6f0ff"/>
+              <stop offset="100%" stop-color="#e7dbff"/>
+            </linearGradient>
+            <marker id="archArrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <path d="M0,0 L6,3 L0,6 z" fill="#0b3a7c"/>
+            </marker>
+          </defs>
+          <rect x="28" y="66" width="320" height="490" rx="30" fill="#eaf6ff" stroke="#70D5FF" stroke-width="3"/>
+          <text x="188" y="128" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="30" font-weight="600" fill="#0b3a7c">MCP Host</text>
+          <text x="188" y="160" text-anchor="middle" font-family="Atkinson Hyperlegible, sans-serif" font-size="24" font-style="italic" fill="#0b3a7c">Example: GitHub Copilot</text>
+          <rect x="58" y="214" width="260" height="72" rx="14" fill="#1338C9" stroke="#70D5FF" stroke-width="2.5"/>
+          <text x="188" y="258" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="28" font-weight="600" fill="#ffffff">MCP Client A</text>
+          <rect x="58" y="424" width="260" height="72" rx="14" fill="#1338C9" stroke="#70D5FF" stroke-width="2.5"/>
+          <text x="188" y="468" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="28" font-weight="600" fill="#ffffff">MCP Client B</text>
+          <rect x="590" y="160" width="450" height="180" rx="18" fill="url(#serverPanelGradient)" stroke="#8A6CF5" stroke-width="2.5"/>
+          <text x="815" y="214" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="31" font-weight="600" fill="#0b3a7c">MCP Server A</text>
+          <rect x="614" y="260" width="110" height="50" rx="10" fill="#6b4fd8"/>
+          <rect x="744" y="260" width="130" height="50" rx="10" fill="#6b4fd8"/>
+          <rect x="894" y="260" width="130" height="50" rx="10" fill="#6b4fd8"/>
+          <rect x="590" y="380" width="450" height="180" rx="18" fill="url(#serverPanelGradient)" stroke="#8A6CF5" stroke-width="2.5"/>
+          <text x="815" y="434" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="31" font-weight="600" fill="#0b3a7c">MCP Server B</text>
+          <rect x="614" y="480" width="110" height="50" rx="10" fill="#6b4fd8"/>
+          <rect x="744" y="480" width="130" height="50" rx="10" fill="#6b4fd8"/>
+          <rect x="894" y="480" width="130" height="50" rx="10" fill="#6b4fd8"/>
+          <text x="669" y="293" text-anchor="middle" font-family="Atkinson Hyperlegible, sans-serif" font-size="22" font-weight="700" fill="#ffffff">Tools</text>
+          <text x="809" y="293" text-anchor="middle" font-family="Atkinson Hyperlegible, sans-serif" font-size="22" font-weight="700" fill="#ffffff">Prompts</text>
+          <text x="959" y="293" text-anchor="middle" font-family="Atkinson Hyperlegible, sans-serif" font-size="22" font-weight="700" fill="#ffffff">Resources</text>
+          <text x="669" y="513" text-anchor="middle" font-family="Atkinson Hyperlegible, sans-serif" font-size="22" font-weight="700" fill="#ffffff">Tools</text>
+          <text x="809" y="513" text-anchor="middle" font-family="Atkinson Hyperlegible, sans-serif" font-size="22" font-weight="700" fill="#ffffff">Prompts</text>
+          <text x="959" y="513" text-anchor="middle" font-family="Atkinson Hyperlegible, sans-serif" font-size="22" font-weight="700" fill="#ffffff">Resources</text>
+          <line x1="348" y1="250" x2="590" y2="250" stroke="#0b3a7c" stroke-width="5" marker-end="url(#archArrow)"/>
+          <line x1="348" y1="460" x2="590" y2="460" stroke="#0b3a7c" stroke-width="5" marker-end="url(#archArrow)"/>
+          <line x1="348" y1="250" x2="572" y2="250" stroke="#70D5FF" stroke-width="4" stroke-linecap="round" stroke-dasharray="12 14" opacity="0.95">
+            <animate attributeName="stroke-dashoffset" from="0" to="-64" dur="2.2s" repeatCount="indefinite"/>
+          </line>
+          <line x1="348" y1="460" x2="572" y2="460" stroke="#70D5FF" stroke-width="4" stroke-linecap="round" stroke-dasharray="12 14" opacity="0.95">
+            <animate attributeName="stroke-dashoffset" from="0" to="-64" dur="2.2s" begin="0.4s" repeatCount="indefinite"/>
+          </line>
+          <g transform="translate(470 250)">
+            <animate attributeName="opacity" values="1;0.88;1" dur="2.2s" repeatCount="indefinite"/>
+            <rect x="-38" y="-15" width="76" height="30" rx="15" fill="#ffffff" stroke="#1a6bde" stroke-width="2.2"/>
+            <text x="0" y="5" text-anchor="middle" font-family="Atkinson Hyperlegible, sans-serif" font-size="15" fill="#1338C9" font-weight="700">MCP</text>
+          </g>
+          <g transform="translate(470 460)">
+            <animate attributeName="opacity" values="1;0.88;1" dur="2.2s" begin="0.35s" repeatCount="indefinite"/>
+            <rect x="-38" y="-15" width="76" height="30" rx="15" fill="#ffffff" stroke="#1a6bde" stroke-width="2.2"/>
+            <text x="0" y="5" text-anchor="middle" font-family="Atkinson Hyperlegible, sans-serif" font-size="15" fill="#1338C9" font-weight="700">MCP</text>
+          </g>
+        </svg>
+        <aside class="notes">
+          MCP hosts like VS Code contain MCP clients that connect to servers. Servers expose tools (functions the LLM can call), resources (read-only data), and prompts (instruction templates).
+        </aside>
+      </section>
+
+      <section>
+        <h3>MCP client/server request flow</h3>
+        <svg viewBox="0 0 1120 400" role="img" aria-label="Sequence diagram showing MCP tools/list and tools/call protocol requests" style="width: 100%; height: auto; display: block;">
+          <defs>
+            <marker id="mcp-seq-client-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L0,6 L9,3 z" fill="#1338C9"/>
+            </marker>
+            <marker id="mcp-seq-server-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L0,6 L9,3 z" fill="#6b4fd8"/>
+            </marker>
+          </defs>
+          <rect x="20" y="20" width="190" height="56" rx="10" fill="#1338C9" stroke="#70D5FF" stroke-width="2.5"/>
+          <text x="115" y="56" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="22" font-weight="600" fill="#ffffff">MCP Client</text>
+          <rect x="910" y="20" width="190" height="56" rx="10" fill="#e7dbff" stroke="#8A6CF5" stroke-width="2.5"/>
+          <text x="1005" y="56" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="22" font-weight="600" fill="#0b3a7c">MCP Server</text>
+          <line x1="115" y1="76" x2="115" y2="395" stroke="#1338C9" stroke-width="2" stroke-dasharray="6 5" opacity="0.45"/>
+          <line x1="1005" y1="76" x2="1005" y2="395" stroke="#8A6CF5" stroke-width="2" stroke-dasharray="6 5" opacity="0.6"/>
+          <text x="122" y="110" font-family="Fredoka, sans-serif" font-size="20" font-weight="600" fill="#0b3a7c">① Discover tools</text>
+          <text x="560" y="128" text-anchor="middle" font-size="17" font-family="'Courier New', Courier, monospace" fill="#0e1e35">{"method": "tools/list"}</text>
+          <line x1="115" y1="141" x2="1000" y2="141" stroke="#1338C9" stroke-width="2.5" marker-end="url(#mcp-seq-client-arrow)"/>
+          <text x="560" y="176" text-anchor="middle" font-size="17" font-family="'Courier New', Courier, monospace" fill="#0e1e35">{"tools": [{"name": "get_product", "description": "...", "inputSchema": {...}}, ...]}</text>
+          <line x1="1005" y1="190" x2="120" y2="190" stroke="#6b4fd8" stroke-width="2.5" marker-end="url(#mcp-seq-server-arrow)"/>
+          <line x1="20" y1="222" x2="1100" y2="222" stroke="rgba(26, 107, 222, 0.22)" stroke-width="1.5"/>
+          <text x="122" y="250" font-family="Fredoka, sans-serif" font-size="20" font-weight="600" fill="#0b3a7c">② Call a tool</text>
+          <text x="560" y="265" text-anchor="middle" font-size="17" font-family="'Courier New', Courier, monospace" fill="#0e1e35">{"method": "tools/call",</text>
+          <text x="560" y="287" text-anchor="middle" font-size="17" font-family="'Courier New', Courier, monospace" fill="#0e1e35">"params": {"name": "get_product", "arguments": {"id": 1}}}</text>
+          <line x1="115" y1="305" x2="1000" y2="305" stroke="#1338C9" stroke-width="2.5" marker-end="url(#mcp-seq-client-arrow)"/>
+          <text x="560" y="343" text-anchor="middle" font-size="17" font-family="'Courier New', Courier, monospace" fill="#0e1e35">{"content": [{"type": "text", "text": "Product: Widget (id=1), $9.99"}]}</text>
+          <line x1="1005" y1="358" x2="120" y2="358" stroke="#6b4fd8" stroke-width="2.5" marker-end="url(#mcp-seq-server-arrow)"/>
+        </svg>
+        <aside class="notes">
+          MCP uses JSON-RPC 2.0. The tools/list request returns tool schemas (name, description, inputSchema) that the LLM uses to understand what's available. The tools/call request invokes a specific tool with arguments and receives structured content back.
+        </aside>
+      </section>
+
+      <section>
+        <h3>MCP clients</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; margin-top: 8px;">
+          <div>
+            <p style="font-size: 0.82em; margin: 0 0 10px; font-weight: 600; color: #32115f;">Clients with the strongest support:</p>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+              <div style="background: rgba(255,255,255,0.7); border-radius: 10px; padding: 12px 8px; text-align: center; border: 1px solid #d8cff0;">
+                <div style="font-size: 1.7em; margin-bottom: 3px;">🤖</div>
+                <strong style="font-size: 0.82em; line-height: 1.15; display: inline-block;">Claude Code</strong>
+              </div>
+              <div style="background: rgba(255,255,255,0.7); border-radius: 10px; padding: 12px 8px; text-align: center; border: 1px solid #d8cff0;">
+                <div style="font-size: 1.7em; margin-bottom: 3px;">🖥️</div>
+                <strong style="font-size: 0.82em; line-height: 1.15; display: inline-block;">Claude Desktop</strong>
+              </div>
+              <div style="background: rgba(255,255,255,0.7); border-radius: 10px; padding: 12px 8px; text-align: center; border: 1px solid #d8cff0;">
+                <div style="font-size: 1.7em; margin-bottom: 3px;">💻</div>
+                <strong style="font-size: 0.82em; line-height: 1.15; display: inline-block;">VS Code + GitHub Copilot</strong>
+              </div>
+              <div style="background: rgba(255,255,255,0.7); border-radius: 10px; padding: 12px 8px; text-align: center; border: 1px solid #d8cff0;">
+                <div style="font-size: 1.7em; margin-bottom: 3px;">🪿</div>
+                <strong style="font-size: 0.82em; line-height: 1.15; display: inline-block;">goose</strong>
+              </div>
+              <div style="background: rgba(255,255,255,0.7); border-radius: 10px; padding: 12px 8px; text-align: center; border: 1px solid #d8cff0;">
+                <div style="font-size: 1.7em; margin-bottom: 3px;">🔬</div>
+                <strong style="font-size: 0.82em; line-height: 1.15; display: inline-block;">MCPJam Inspector</strong>
+              </div>
+              <div style="background: rgba(255,255,255,0.7); border-radius: 10px; padding: 12px 8px; text-align: center; border: 1px solid #d8cff0;">
+                <div style="font-size: 1.7em; margin-bottom: 3px;">🔍</div>
+                <strong style="font-size: 0.82em; line-height: 1.15; display: inline-block;">MCP Inspector</strong>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p style="font-size: 0.82em; margin: 0 0 10px; font-weight: 600; color: #32115f;">Support across <a target="_blank" href="https://modelcontextprotocol.io/clients">100+ clients</a> varies:</p>
+            <table style="font-size: 0.95em; width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr><th style="padding: 10px 12px;">Capability</th><th style="padding: 10px 12px;">Support</th></tr>
+              </thead>
+              <tbody>
+                <tr><td style="padding: 10px 12px;">Tools</td><td style="padding: 10px 12px;">All</td></tr>
+                <tr><td style="padding: 10px 12px;">Prompts</td><td style="padding: 10px 12px;">43/113</td></tr>
+                <tr><td style="padding: 10px 12px;">Resources</td><td style="padding: 10px 12px;">47/113</td></tr>
+                <tr><td style="padding: 10px 12px;">OAuth with DCR</td><td style="padding: 10px 12px;">16/113</td></tr>
+                <tr><td style="padding: 10px 12px;">Elicitation</td><td style="padding: 10px 12px;">16/113</td></tr>
+                <tr><td style="padding: 10px 12px;">Apps</td><td style="padding: 10px 12px;">10/113</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <aside class="notes">
+          Tools are the universal denominator — every client supports them. VS Code and Claude Code have the strongest full-spec support including OAuth. MCPJam and MCP Inspector are testing tools rather than production agents.
+        </aside>
+      </section>
+
+      <section class="compact-code">
+        <h3>Configure VS Code with public MCP server</h3>
+        <div class="two-column" style="grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: stretch;">
+          <div style="display: flex; flex-direction: column;">
+            <h4>Add to <code>.mcp.json</code></h4>
+            <pre style="flex: 1; margin-bottom: 0;"><code class="language-json" data-trim style="font-size: 0.72em; height: 100%; box-sizing: border-box;">{
+  "servers": {
+    "microsoft-learn": {
+      "type": "http",
+      "url": "https://learn.microsoft.com/api/mcp"
+    }
+  }
+}</code></pre>
+          </div>
+          <div>
+            <h4>Or install from Extensions</h4>
+            <p style="font-size: 0.66em;">Search <code>@mcp</code> in the Extensions view:</p>
+            <img class="client-shot" src="screenshot_vscode_mcpextensions2.png" alt="VS Code Extensions view searching @mcp, showing the GitHub MCP server with an Install button" style="margin: 0;">
+          </div>
+        </div>
+        <aside class="notes">Demo this live in VS Code. Show both ways to add a server, then show the tools in Copilot Chat with approval prompts.</aside>
+      </section>
+
+      <section class="compact-code">
+        <h3>Configure Copilot CLI with public MCP server</h3>
+        <p class="lead">Add remote servers to your Copilot CLI user configuration.</p>
+        <div class="two-column" style="align-items: stretch;">
+          <div class="box">
+            <h4>1. Add the server</h4>
+            <pre><code class="language-shell" data-trim>copilot mcp add --transport http \
+  microsoft-learn \
+  https://learn.microsoft.com/api/mcp</code></pre>
+          </div>
+          <div class="box">
+            <h4>2. Verify the server</h4>
+            <p>Start <code>copilot</code>, then run:</p>
+            <pre><code class="language-plaintext" data-trim>/mcp show microsoft-learn</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <section class="compact-code">
+        <h3>Configure Copilot app with public MCP server</h3>
+        <div class="two-column">
+          <div>
+            <h4>1. Add the server</h4>
+            <div class="step"><div class="step-number">1</div><div>Open <strong>Settings → MCP → Add server</strong>.</div></div>
+            <div class="step"><div class="step-number">2</div><div>Name it <code>microsoft-learn</code> and choose <strong>HTTP</strong>.</div></div>
+            <div class="step"><div class="step-number">3</div><div>Enter the URL, then add the server.</div></div>
+          </div>
+          <div>
+            <h4>2. Enter the connection details</h4>
+            <p><strong>URL</strong></p>
+            <pre><code class="language-plaintext" data-trim>https://learn.microsoft.com/api/mcp</code></pre>
+          </div>
+        </div>
+        <div class="callout">Confirm the server shows as enabled and loaded with a green check mark.</div>
+      </section>
+
+      <section>
+        <h3>Adding an MCP server is a trust decision</h3>
+        <p>An MCP server gives the agent new abilities, and it acts with your access.</p>
+        <div class="three-column" style="align-items: stretch;">
+          <div class="box"><h4>🖥️ Who runs it?</h4><p>Local servers run code on your machine. Remote servers see every request you send.</p></div>
+          <div class="box"><h4>🔧 What can it do?</h4><p>Some tools only read. Others change files, repositories, or shared services.</p></div>
+          <div class="box"><h4>📥 What comes back?</h4><p>Tool descriptions and results are untrusted input that can steer the agent.</p></div>
+        </div>
+        <div class="callout">You stay in control at two moments: when you connect a server, and each time a tool is called.</div>
+      </section>
+
+      <section>
+        <h3>Inspecting a tool call</h3>
+        <div class="approval-layout">
+          <div class="approval-shot">
+            <img src="screenshot_vscode_prtool.png" alt="VS Code tool approval dialog for Create Pull Request, showing the title and description arguments, a warning that it changes remote state, and Allow in this Session and Skip buttons">
+            <span class="approval-marker" style="top: 7%;">1</span>
+            <span class="approval-marker" style="top: 27%;">2</span>
+            <span class="approval-marker" style="top: 81%;">3</span>
+            <span class="approval-marker" style="top: 95.5%;">4</span>
+          </div>
+          <div>
+            <div class="step"><div class="step-number">1</div><div><strong>Which tool?</strong> A write tool deserves more scrutiny than a search.</div></div>
+            <div class="step"><div class="step-number">2</div><div><strong>What arguments?</strong> Read exactly what will be sent.</div></div>
+            <div class="step"><div class="step-number">3</div><div><strong>What changes?</strong> Remote state means other people will see it.</div></div>
+            <div class="step"><div class="step-number">4</div><div><strong>For how long?</strong> Session approval skips future prompts. Skip anything surprising.</div></div>
+          </div>
+        </div>
+        <aside class="notes">Trusting a server to start is not blanket approval for every action. Approval behavior differs by host and user settings.</aside>
+      </section>
+
+      <section>
+        <span class="time">15 min</span>
+        <h3>Exercise 2: connect and inspect</h3>
+        <p><a href="https://github.com/pamelafox/github-copilot-mcp-skills-workshop/blob/main/exercise2.md"><code>exercise2.md</code></a></p>
+        <ol>
+          <li>Connect the Microsoft Learn MCP server.</li>
+          <li>Inspect tool schemas before using them.</li>
+          <li>Run one grounded documentation query.</li>
+        </ol>
+      </section>
+
+      <section class="heading-only"><h2>Authenticated MCP servers</h2></section>
 
       <section>
         <h3>Public and authenticated servers</h3>
@@ -363,133 +1313,241 @@
       </section>
 
       <section>
-        <h3>One workshop, three Copilot environments</h3>
-        <table>
-          <thead><tr><th>Environment</th><th>Configuration</th><th>Important difference</th></tr></thead>
-          <tbody>
-            <tr><td><strong>VS Code</strong></td><td><code>.mcp.json</code></td><td>Portable workspace config, OAuth, tool picker, and project skills</td></tr>
-            <tr><td><strong>Copilot CLI</strong></td><td><code>copilot mcp</code> and <code>~/.copilot/mcp-config.json</code></td><td>GitHub server built in; toolsets can be enabled per session</td></tr>
-            <tr><td><strong>Copilot app</strong></td><td>Settings UI and repository context</td><td>Available GitHub write tools may be narrower</td></tr>
-          </tbody>
-        </table>
-        <div class="callout">Always inspect the tools actually exposed in your client. Do not assume feature parity.</div>
+        <h3>How MCP servers restrict access</h3>
+        <p class="lead" style="font-size: 0.82em; margin-bottom: 22px;">The server decides how you prove access. You'll see one of these:</p>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px;">
+          <div style="background: rgba(255,255,255,0.72); border: 1px solid rgba(26, 107, 222, 0.22); border-radius: 8px; padding: 18px 20px; min-height: 360px;">
+            <svg viewBox="0 0 300 150" role="img" aria-label="Private network access diagram" style="width: 100%; height: auto; display: block; margin-bottom: 14px;">
+              <defs>
+                <marker id="private-network-arrow" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,5 L6,2.5 z" fill="#1338C9"/></marker>
+              </defs>
+              <rect x="88" y="18" width="188" height="112" rx="12" fill="none" stroke="#9fb6d4" stroke-width="2.4" stroke-dasharray="8 6"/>
+              <text x="182" y="42" text-anchor="middle" font-size="14" font-weight="700" fill="#3a6080">Private network</text>
+              <rect x="20" y="62" width="58" height="42" rx="8" fill="rgba(19, 56, 201, 0.10)" stroke="#1338C9" stroke-width="2"/>
+              <text x="49" y="88" text-anchor="middle" font-size="13" font-weight="700" fill="#1338C9">Client</text>
+              <line x1="78" y1="83" x2="142" y2="83" stroke="#1338C9" stroke-width="2.2" marker-end="url(#private-network-arrow)"/>
+              <rect x="142" y="58" width="118" height="54" rx="8" fill="rgba(138, 108, 245, 0.14)" stroke="#6b4fd8" stroke-width="2"/>
+              <image href="Model_Context_Protocol_logo.svg" x="154" y="70" width="30" height="30"/>
+              <text x="222" y="80" text-anchor="middle" font-size="12" font-weight="700" fill="#6b4fd8">MCP</text>
+              <text x="222" y="94" text-anchor="middle" font-size="12" font-weight="700" fill="#6b4fd8">server</text>
+            </svg>
+            <p style="font-size: 0.76em; margin: 0 0 12px; color: #0b3a7c;"><strong>Private network</strong></p>
+            <p style="font-size: 0.62em; line-height: 1.28; margin: 0 0 14px; color: #3a6080;">The server is only reachable from inside a company network or VPN.</p>
+            <p style="font-size: 0.56em; line-height: 1.26; margin: 0; color: #3a6080;"><strong>You:</strong> connect from the right network. No sign-in prompt.</p>
+          </div>
+          <div style="background: rgba(255,255,255,0.72); border: 1px solid rgba(26, 107, 222, 0.22); border-radius: 8px; padding: 18px 20px; min-height: 360px;">
+            <svg viewBox="0 0 300 150" role="img" aria-label="Key-based access diagram" style="width: 100%; height: auto; display: block; margin-bottom: 14px;">
+              <defs>
+                <marker id="key-access-arrow" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,5 L6,2.5 z" fill="#1338C9"/></marker>
+              </defs>
+              <rect x="20" y="54" width="58" height="42" rx="8" fill="rgba(19, 56, 201, 0.10)" stroke="#1338C9" stroke-width="2"/>
+              <text x="49" y="80" text-anchor="middle" font-size="13" font-weight="700" fill="#1338C9">Client</text>
+              <rect x="112" y="52" width="76" height="46" rx="8" fill="rgba(24, 134, 75, 0.12)" stroke="#18864b" stroke-width="2"/>
+              <text x="150" y="73" text-anchor="middle" font-size="18" fill="#0b3a7c">key</text>
+              <text x="150" y="90" text-anchor="middle" font-size="11" fill="#3a6080">header</text>
+              <line x1="78" y1="75" x2="112" y2="75" stroke="#1338C9" stroke-width="2.2" marker-end="url(#key-access-arrow)"/>
+              <line x1="188" y1="75" x2="218" y2="75" stroke="#1338C9" stroke-width="2.2" marker-end="url(#key-access-arrow)"/>
+              <rect x="218" y="48" width="76" height="54" rx="8" fill="rgba(138, 108, 245, 0.14)" stroke="#6b4fd8" stroke-width="2"/>
+              <image href="Model_Context_Protocol_logo.svg" x="226" y="60" width="30" height="30"/>
+              <text x="273" y="79" text-anchor="middle" font-size="11" font-weight="700" fill="#6b4fd8">MCP</text>
+              <text x="273" y="92" text-anchor="middle" font-size="11" font-weight="700" fill="#6b4fd8">server</text>
+            </svg>
+            <p style="font-size: 0.76em; margin: 0 0 12px; color: #0b3a7c;"><strong>Key-based access</strong></p>
+            <p style="font-size: 0.62em; line-height: 1.28; margin: 0 0 14px; color: #3a6080;">You paste an API key or token, and the client sends it in a header.</p>
+            <p style="font-size: 0.56em; line-height: 1.26; margin: 0; color: #3a6080;"><strong>Watch out:</strong> keys can leak. Never commit them to <code>.mcp.json</code>.</p>
+          </div>
+          <div style="background: rgba(255,255,255,0.72); border: 1px solid rgba(26, 107, 222, 0.22); border-radius: 8px; padding: 18px 20px; min-height: 360px;">
+            <svg viewBox="0 0 300 150" role="img" aria-label="OAuth-based access diagram" style="width: 100%; height: auto; display: block; margin-bottom: 14px;">
+              <defs>
+                <marker id="oauth-card-arrow" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,5 L6,2.5 z" fill="#1338C9"/></marker>
+                <marker id="oauth-card-dashed-arrow" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,5 L6,2.5 z" fill="#18864b"/></marker>
+              </defs>
+              <rect x="18" y="92" width="56" height="38" rx="8" fill="rgba(19, 56, 201, 0.10)" stroke="#1338C9" stroke-width="2"/>
+              <text x="46" y="116" text-anchor="middle" font-size="12" font-weight="700" fill="#1338C9">Client</text>
+              <rect x="112" y="18" width="78" height="42" rx="8" fill="rgba(24, 134, 75, 0.12)" stroke="#18864b" stroke-width="2"/>
+              <text x="151" y="35" text-anchor="middle" font-size="12" font-weight="700" fill="#18864b">Auth</text>
+              <text x="151" y="50" text-anchor="middle" font-size="11" fill="#18864b">server</text>
+              <rect x="216" y="86" width="78" height="50" rx="8" fill="rgba(138, 108, 245, 0.14)" stroke="#6b4fd8" stroke-width="2"/>
+              <image href="Model_Context_Protocol_logo.svg" x="224" y="97" width="28" height="28"/>
+              <text x="273" y="109" text-anchor="middle" font-size="11" font-weight="700" fill="#6b4fd8">MCP</text>
+              <text x="273" y="122" text-anchor="middle" font-size="11" font-weight="700" fill="#6b4fd8">server</text>
+              <line x1="74" y1="101" x2="123" y2="60" stroke="#1338C9" stroke-width="2.1" marker-end="url(#oauth-card-arrow)"/>
+              <text x="78" y="66" text-anchor="middle" font-size="11" fill="#1338C9">login</text>
+              <line x1="176" y1="60" x2="216" y2="92" stroke="#18864b" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#oauth-card-dashed-arrow)"/>
+              <text x="222" y="74" text-anchor="middle" font-size="11" fill="#18864b">token</text>
+              <line x1="74" y1="111" x2="216" y2="111" stroke="#1338C9" stroke-width="2.2" marker-end="url(#oauth-card-arrow)"/>
+              <text x="147" y="104" text-anchor="middle" font-size="11" fill="#1338C9">bearer token</text>
+            </svg>
+            <p style="font-size: 0.76em; margin: 0 0 12px; color: #0b3a7c;"><strong>OAuth-based access</strong></p>
+            <p style="font-size: 0.62em; line-height: 1.28; margin: 0 0 14px; color: #3a6080;">You sign in through the browser, and the client stores a token for you.</p>
+            <p style="font-size: 0.56em; line-height: 1.26; margin: 0; color: #3a6080;"><strong>Example:</strong> GitHub MCP, which also accepts a personal access token.</p>
+          </div>
+        </div>
+        <aside class="notes">
+          As a user, you don't choose the model; the server does. Private-network servers just work when you're on the network. Key-based servers need a secret you paste in, which you must keep out of source control. OAuth servers open a browser sign-in, and the client keeps the token for you.
+        </aside>
       </section>
 
       <section>
-        <h3>Connect a public server</h3>
-        <pre><code class="language-json" data-trim>{
-  "servers": {
-    "microsoft-learn": {
-      "type": "http",
-      "url": "https://learn.microsoft.com/api/mcp"
-    }
-  }
-}</code></pre>
-        <ul>
-          <li>Remote Streamable HTTP transport</li>
-          <li>No API key or sign-in</li>
-          <li>Three current tools: docs search, page fetch, and code sample search</li>
+        <h3>What happens when you sign in</h3>
+        <svg viewBox="0 0 1120 510" role="img" aria-label="Simplified OAuth sequence for MCP" style="width: 94%; height: auto; display: block; margin: -6px auto 0;">
+          <defs>
+            <marker id="oauth-user-arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L0,7 L10,3.5 z" fill="#b86800"/>
+            </marker>
+            <marker id="oauth-client-arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L0,7 L10,3.5 z" fill="#1338C9"/>
+            </marker>
+            <marker id="oauth-as-arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L0,7 L10,3.5 z" fill="#18864b"/>
+            </marker>
+            <marker id="oauth-server-arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L0,7 L10,3.5 z" fill="#6b4fd8"/>
+            </marker>
+          </defs>
+          <rect x="26" y="18" width="128" height="48" rx="8" fill="rgba(184, 104, 0, 0.12)" stroke="#b86800" stroke-width="3"/>
+          <circle cx="52" cy="36" r="8" fill="#b86800"/>
+          <path d="M36 57 C 39 46, 65 46, 68 57" fill="#b86800"/>
+          <text x="98" y="49" text-anchor="middle" font-size="18" font-weight="700" fill="#0b3a7c">User</text>
+          <rect x="292" y="18" width="158" height="48" rx="8" fill="rgba(19, 56, 201, 0.10)" stroke="#1338C9" stroke-width="3"/>
+          <image href="Model_Context_Protocol_logo.svg" x="310" y="32" width="20" height="20"/>
+          <text x="390" y="49" text-anchor="middle" font-size="18" font-weight="700" fill="#0b3a7c">MCP Client</text>
+          <rect x="604" y="18" width="250" height="48" rx="8" fill="rgba(24, 134, 75, 0.12)" stroke="#18864b" stroke-width="3"/>
+          <path d="M634 29 L647 34 L645 45 C643 52, 639 57, 634 60 C629 57, 625 52, 623 45 L621 34 Z" fill="rgba(24, 134, 75, 0.16)" stroke="#18864b" stroke-width="2"/>
+          <path d="M628 44 L632 48 L640 38" fill="none" stroke="#18864b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="748" y="49" text-anchor="middle" font-size="18" font-weight="700" fill="#0b3a7c">Authorization Server</text>
+          <rect x="944" y="18" width="150" height="48" rx="8" fill="rgba(138, 108, 245, 0.14)" stroke="#6b4fd8" stroke-width="3"/>
+          <image href="Model_Context_Protocol_logo.svg" x="958" y="30" width="24" height="24"/>
+          <text x="1036" y="49" text-anchor="middle" font-size="16" font-weight="700" fill="#0e1e35">MCP Server</text>
+          <line x1="90" y1="66" x2="90" y2="486" stroke="#9fb6d4" stroke-width="1.5" stroke-dasharray="6 5"/>
+          <line x1="371" y1="66" x2="371" y2="486" stroke="#9fb6d4" stroke-width="1.5" stroke-dasharray="6 5"/>
+          <line x1="729" y1="66" x2="729" y2="486" stroke="#9fb6d4" stroke-width="1.5" stroke-dasharray="6 5"/>
+          <line x1="1019" y1="66" x2="1019" y2="486" stroke="#9fb6d4" stroke-width="1.5" stroke-dasharray="6 5"/>
+          <text x="232" y="92" text-anchor="middle" font-size="13" fill="#b86800">Starts the server or calls a tool</text>
+          <line x1="90" y1="103" x2="371" y2="103" stroke="#b86800" stroke-width="2.2" marker-end="url(#oauth-user-arrow)"/>
+          <text x="550" y="128" text-anchor="middle" font-size="13" fill="#1338C9">Redirects to AS with authorization request</text>
+          <line x1="371" y1="139" x2="729" y2="139" stroke="#1338C9" stroke-width="2.2" marker-end="url(#oauth-client-arrow)"/>
+          <text x="410" y="166" text-anchor="middle" font-size="13" fill="#18864b">Presents authentication prompt</text>
+          <line x1="729" y1="177" x2="90" y2="177" stroke="#18864b" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#oauth-as-arrow)"/>
+          <text x="410" y="204" text-anchor="middle" font-size="13" fill="#b86800">Enters credentials</text>
+          <line x1="90" y1="215" x2="729" y2="215" stroke="#b86800" stroke-width="2.2" marker-end="url(#oauth-user-arrow)"/>
+          <rect x="598" y="232" width="262" height="42" rx="6" fill="rgba(24, 134, 75, 0.12)" stroke="#18864b" stroke-dasharray="6 4"/>
+          <text x="729" y="250" text-anchor="middle" font-size="13" font-weight="400" fill="#0e5c33">Authenticates user and</text>
+          <text x="729" y="268" text-anchor="middle" font-size="13" font-weight="400" fill="#0e5c33">validates client registration</text>
+          <text x="410" y="298" text-anchor="middle" font-size="13" fill="#18864b">Displays consent page for client</text>
+          <line x1="729" y1="309" x2="90" y2="309" stroke="#18864b" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#oauth-as-arrow)"/>
+          <text x="410" y="336" text-anchor="middle" font-size="13" fill="#b86800">Grants consent</text>
+          <line x1="90" y1="347" x2="729" y2="347" stroke="#b86800" stroke-width="2.2" marker-end="url(#oauth-user-arrow)"/>
+          <text x="550" y="374" text-anchor="middle" font-size="13" fill="#18864b">Issues authorization code</text>
+          <line x1="729" y1="385" x2="371" y2="385" stroke="#18864b" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#oauth-as-arrow)"/>
+          <text x="550" y="408" text-anchor="middle" font-size="13" fill="#1338C9">Exchanges code for access token</text>
+          <line x1="371" y1="419" x2="729" y2="419" stroke="#1338C9" stroke-width="2.2" marker-end="url(#oauth-client-arrow)"/>
+          <text x="550" y="436" text-anchor="middle" font-size="12" fill="#18864b">Returns access token</text>
+          <line x1="729" y1="446" x2="371" y2="446" stroke="#18864b" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#oauth-as-arrow)"/>
+          <text x="675" y="464" text-anchor="middle" font-size="12" fill="#1338C9">MCP request + access token</text>
+          <line x1="371" y1="474" x2="1019" y2="474" stroke="#1338C9" stroke-width="2.2" marker-end="url(#oauth-client-arrow)"/>
+          <text x="790" y="489" text-anchor="middle" font-size="12" fill="#6b4fd8">Authenticated result or error</text>
+          <line x1="1019" y1="497" x2="371" y2="497" stroke="#6b4fd8" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#oauth-server-arrow)"/>
+        </svg>
+        <aside class="notes">
+          This is what happens behind the browser pop-up when you select Start on an authenticated server. You only see the sign-in and consent pages. The client handles redirects and token exchange, then attaches the token to every MCP request.
+        </aside>
+      </section>
+
+      <section>
+        <h3>Every request carries your token</h3>
+        <p style="font-size: 0.82em; margin: 0 0 10px;">After sign-in, the client sends your token with each tool call:</p>
+        <svg viewBox="0 0 1100 620" role="img" aria-label="OAuth-protected MCP request and response flow" style="margin-top: -86px; width: 88%; max-width: 1100px; height: auto;">
+          <defs>
+            <linearGradient id="oauthFlowServerCard" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ffffff"/>
+              <stop offset="100%" stop-color="#ece3ff"/>
+            </linearGradient>
+            <marker id="oauthFlowArrow" markerWidth="10" markerHeight="10" refX="7" refY="3.5" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L0,7 L7,3.5 z" fill="#0b3a7c"/>
+            </marker>
+          </defs>
+          <rect x="46" y="92" width="246" height="438" rx="26" fill="#1338C9"/>
+          <image href="Model_Context_Protocol_logo.svg" x="139" y="202" width="58" height="58" style="filter: invert(1);"/>
+          <text x="169" y="322" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="34" font-weight="700" fill="#ffffff">MCP Client</text>
+          <rect x="788" y="92" width="278" height="438" rx="26" fill="url(#oauthFlowServerCard)" stroke="#6b4fd8" stroke-width="2.5"/>
+          <image href="Model_Context_Protocol_logo.svg" x="898" y="202" width="58" height="58" opacity="0.92"/>
+          <text x="927" y="322" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="34" font-weight="700" fill="#6b4fd8">MCP Server</text>
+          <text x="927" y="370" text-anchor="middle" font-family="Atkinson Hyperlegible, sans-serif" font-size="18" fill="#1f1f1f">Verifies the access token</text>
+          <text x="927" y="396" text-anchor="middle" font-family="Atkinson Hyperlegible, sans-serif" font-size="18" fill="#1f1f1f">and returns results scoped</text>
+          <text x="927" y="422" text-anchor="middle" font-family="Atkinson Hyperlegible, sans-serif" font-size="18" fill="#1f1f1f">to that signed-in user.</text>
+          <line x1="292" y1="146" x2="788" y2="146" stroke="#0b3a7c" stroke-width="5" marker-end="url(#oauthFlowArrow)"/>
+          <g transform="translate(540 146)">
+            <rect x="-34" y="-18" width="68" height="34" rx="17" fill="#ffffff" stroke="#1a6bde" stroke-width="2"/>
+            <text x="0" y="7" text-anchor="middle" font-family="Atkinson Hyperlegible, sans-serif" font-size="18" font-weight="700" fill="#1a6bde">MCP</text>
+          </g>
+          <rect x="346" y="188" width="430" height="40" rx="12" fill="#f5f7fb" stroke="#dbe6f5" stroke-width="2"/>
+          <text x="364" y="215" font-family="SFMono-Regular, Consolas, monospace" font-size="16" fill="#111111">Authorization: Bearer &lt;access_token&gt;</text>
+          <rect x="346" y="238" width="430" height="206" rx="18" fill="#f5f7fb" stroke="#dbe6f5" stroke-width="2"/>
+          <text x="364" y="266" font-family="SFMono-Regular, Consolas, monospace" font-size="12" fill="#2b2b2b">{</text>
+          <text x="382" y="290" font-family="SFMono-Regular, Consolas, monospace" font-size="12" fill="#2b2b2b">"jsonrpc": "2.0",</text>
+          <text x="382" y="314" font-family="SFMono-Regular, Consolas, monospace" font-size="12" fill="#2b2b2b">"method": "tools/call",</text>
+          <text x="382" y="338" font-family="SFMono-Regular, Consolas, monospace" font-size="12" fill="#2b2b2b">"params": {</text>
+          <text x="404" y="362" font-family="SFMono-Regular, Consolas, monospace" font-size="12" fill="#2b2b2b">"name": "list_issues",</text>
+          <text x="404" y="386" font-family="SFMono-Regular, Consolas, monospace" font-size="12" fill="#2b2b2b">"arguments": { "repo": "..." }</text>
+          <text x="382" y="410" font-family="SFMono-Regular, Consolas, monospace" font-size="12" fill="#2b2b2b">}</text>
+          <text x="364" y="434" font-family="SFMono-Regular, Consolas, monospace" font-size="12" fill="#2b2b2b">}</text>
+          <line x1="788" y1="500" x2="292" y2="500" stroke="#0b3a7c" stroke-width="5" marker-end="url(#oauthFlowArrow)"/>
+          <g transform="translate(540 500)">
+            <rect x="-34" y="-18" width="68" height="34" rx="17" fill="#ffffff" stroke="#1a6bde" stroke-width="2"/>
+            <text x="0" y="7" text-anchor="middle" font-family="Atkinson Hyperlegible, sans-serif" font-size="18" font-weight="700" fill="#1a6bde">MCP</text>
+          </g>
+          <rect x="346" y="534" width="430" height="72" rx="18" fill="#f5f7fb" stroke="#dbe6f5" stroke-width="2"/>
+          <text x="364" y="560" font-family="SFMono-Regular, Consolas, monospace" font-size="11.5" fill="#2b2b2b">{</text>
+          <text x="382" y="582" font-family="SFMono-Regular, Consolas, monospace" font-size="11.5" fill="#2b2b2b">"jsonrpc": "2.0", "result": {</text>
+          <text x="382" y="602" font-family="SFMono-Regular, Consolas, monospace" font-size="11.5" fill="#2b2b2b">"content": [{ "title": "Fix quiz bug" }, ...] } }</text>
+        </svg>
+        <aside class="notes">
+          The request is a normal MCP tools/call, plus an Authorization header with your token. The server checks the token and returns only what your account can see.
+        </aside>
+      </section>
+
+      <section>
+        <h3>Authentication vs. authorization</h3>
+        <div class="two-column" style="margin-top: 16px; align-items: stretch;">
+          <div class="box"><h4>Authentication</h4><p>Proves who you are, usually with OAuth in the browser. Some clients also accept a personal access token.</p><p><strong>GitHub:</strong> your GitHub account, plus any org SSO policy.</p></div>
+          <div class="box"><h4>Authorization</h4><p>Decides what each call may read or change, based on your account's permissions.</p><p><strong>GitHub:</strong> the repositories and orgs you can access.</p></div>
+        </div>
+        <div class="callout">The agent can do anything your account can do, within the access you granted.</div>
+      </section>
+
+      <section>
+        <h3>GitHub MCP server</h3>
+        <p style="display: flex; align-items: center; gap: 14px; margin-top: 0;"><img src="logos/logo_github.svg" alt="" style="width: 44px; margin: 0; border: 0; box-shadow: none;"><span>GitHub's <a target="_blank" href="https://github.com/github/github-mcp-server">official MCP server</a> connects agents to the GitHub platform.</span></p>
+        <ul class="tight" style="margin-top: 0;">
+          <li><strong>Remote:</strong> hosted by GitHub at <code>https://api.githubcopilot.com/mcp/</code></li>
+          <li><strong>Local:</strong> run it with Docker or a binary</li>
+          <li><strong>Sign in:</strong> OAuth or a personal access token</li>
         </ul>
+        <p style="margin: 10px 0 8px;"><strong>GitHub groups its tools into toolsets</strong>, for example:</p>
+        <div class="four-column">
+          <div class="box"><h4>Repositories</h4><p><code>repos</code></p><p>Browse code, search files, read commits</p></div>
+          <div class="box"><h4>Issues &amp; PRs</h4><p><code>issues</code> <code>pull_requests</code></p><p>Create, triage, review, and update</p></div>
+          <div class="box"><h4>Actions</h4><p><code>actions</code></p><p>Check workflow runs and build failures</p></div>
+          <div class="box"><h4>Security</h4><p><code>code_security</code> <code>dependabot</code></p><p>Review code scanning and Dependabot alerts</p></div>
+        </div>
+        <aside class="notes">Toolsets are a GitHub server feature, not part of the MCP spec. The default set is context, repos, issues, pull requests, and users. Copilot CLI starts read-only. Exercise 3 uses issues, repos, and pull requests.</aside>
       </section>
 
       <section>
-        <span class="time">15 min</span>
-        <h3>Exercise 1: connect and inspect</h3>
-        <p><a href="https://github.com/pamelafox/github-copilot-mcp-skills-workshop/blob/main/exercise1.md"><code>exercise1.md</code></a></p>
-        <ol>
-          <li>Map hosts, clients, servers, tools, resources, and prompts.</li>
-          <li>Connect the Microsoft Learn MCP server.</li>
-          <li>Inspect tool schemas before using them.</li>
-          <li>Run one grounded documentation query.</li>
-        </ol>
-      </section>
-
-      <section class="heading-only"><h2>Documentation workflows</h2></section>
-
-      <section>
-        <h3>Use the right Learn tool</h3>
-        <table>
-          <thead><tr><th>Question</th><th>Tool</th><th>Why</th></tr></thead>
-          <tbody>
-            <tr><td>Where is the current guidance?</td><td><code>microsoft_docs_search</code></td><td>Semantic discovery across official docs</td></tr>
-            <tr><td>What does the full reference say?</td><td><code>microsoft_docs_fetch</code></td><td>Complete selected page and API details</td></tr>
-            <tr><td>What does working code look like?</td><td><code>microsoft_code_sample_search</code></td><td>Official snippets filtered by language</td></tr>
-          </tbody>
-        </table>
-        <div class="callout">Search, select, fetch, compare, cite. A search snippet is rarely the end of the investigation.</div>
-      </section>
-
-      <section>
-        <h3>Tool discovery and approval</h3>
+        <h3>Authenticated servers can expose write tools</h3>
+        <p>Read and write tools carry different kinds of risk.</p>
         <div class="two-column">
-          <div>
-            <p><strong>At connection time</strong></p>
-            <ul><li>Review server URL or command.</li><li>Decide whether to trust the server.</li><li>Client discovers current schemas.</li><li>Enable only relevant tools.</li></ul>
-          </div>
-          <div>
-            <p><strong>At call time</strong></p>
-            <ul><li>Review tool name and arguments.</li><li>Check whether data leaves your environment.</li><li>Confirm the result and citations.</li><li>Deny or refine surprising calls.</li></ul>
-          </div>
+          <div class="box"><h4>👀 Read</h4><ul><li>Can expose private source or metadata</li><li>Can ingest untrusted issue text</li><li>Still deserves review</li><li>Example: <code>get_file_contents</code></li></ul></div>
+          <div class="box"><h4>✏️ Write</h4><ul><li>Changes shared state</li><li>Can notify or affect other people</li><li>Verify target and payload</li><li>Example: <code>create_pull_request</code></li></ul></div>
         </div>
-        <aside class="notes">Trusting a server to start is not blanket approval for every action. Approval behavior differs by host and user settings.</aside>
-      </section>
-
-      <section class="heading-only"><h2>Authenticated GitHub workflows</h2></section>
-
-      <section>
-        <h3>Connect the GitHub MCP server</h3>
-        <pre><code class="language-json" data-trim>{
-  "servers": {
-    "github": {
-      "type": "http",
-      "url": "https://api.githubcopilot.com/mcp/"
-    }
-  }
-}</code></pre>
-        <div class="two-column">
-          <div class="box"><h4>Authentication</h4><p>OAuth establishes the GitHub identity. SSO or token policy may also apply.</p></div>
-          <div class="box"><h4>Authorization</h4><p>The account and repository permissions determine what each call may read or change.</p></div>
-        </div>
+        <div class="callout warning"><strong>Authenticated does not mean approved.</strong><br>Remember: You can configure agents to require approvals for all write tools.</div>
       </section>
 
       <section>
-        <h3>GitHub toolsets reduce noise and risk</h3>
-        <table>
-          <thead><tr><th>Toolset</th><th>Examples</th><th>Workshop use</th></tr></thead>
-          <tbody>
-            <tr><td><code>context</code></td><td><code>get_me</code></td><td>Identify the active account before acting</td></tr>
-            <tr><td><code>repos</code></td><td>search repositories, read files, list commits</td><td>Remote code research</td></tr>
-            <tr><td><code>repos</code></td><td>read files, create branches, push files</td><td>Research and commit the contribution</td></tr>
-            <tr><td><code>pull_requests</code></td><td>read, review, create PRs</td><td>Submit the tested fix upstream</td></tr>
-          </tbody>
-        </table>
-        <p class="muted">The default server includes context, repos, issues, pull requests, and users. CLI starts with read-only tools by default.</p>
-      </section>
-
-      <section>
-        <h3>Read and write are different risk classes</h3>
-        <div class="two-column">
-          <div class="box"><h4>Read</h4><ul><li>Can expose private source or metadata</li><li>Can ingest untrusted issue text</li><li>Still deserves review</li><li>Example: <code>get_file_contents</code></li></ul></div>
-          <div class="box"><h4>Write</h4><ul><li>Changes shared state</li><li>Can notify or affect other people</li><li>Verify target and payload</li><li>Example: <code>create_pull_request</code></li></ul></div>
-        </div>
-        <div class="callout warning"><strong>Authenticated does not mean approved.</strong> Ask to see exact write content before allowing the call.</div>
-      </section>
-
-      <section>
-        <h3>A practical contribution workflow</h3>
-        <div class="flow">
-          <div class="node server">Verify fork and research upstream</div><div class="arrow">&rarr;</div>
-          <div class="node action">Edit and test locally</div><div class="arrow">&rarr;</div>
-          <div class="node server">Commit to fork branch</div><div class="arrow">&rarr;</div>
-          <div class="node">Open upstream PR</div>
-        </div>
-        <p class="muted" style="margin-top: 32px;">Different stages use different tools in the same agent loop. GitHub MCP does not replace local editor or terminal tools.</p>
-      </section>
-
-      <section>
-        <span class="time">29 min</span>
-        <h3>Exercise 2: GitHub contribution</h3>
-        <p><a href="https://github.com/pamelafox/github-copilot-mcp-skills-workshop/blob/main/exercise2.md"><code>exercise2.md</code></a></p>
+        <span class="time">25 min</span>
+        <h3>Exercise 3: Use the GitHub MCP server</h3>
+        <p><a href="https://github.com/pamelafox/github-copilot-mcp-skills-workshop/blob/main/exercise3.md"><code>exercise3.md</code></a></p>
         <ol>
           <li>Connect GitHub MCP with authenticated tools.</li>
           <li>List and choose an open quiz issue.</li>
@@ -497,82 +1555,209 @@
           <li>Commit the focused change to your fork.</li>
           <li>Open a pull request to the workshop repository.</li>
         </ol>
+        <aside class="notes">Different stages use different tools in the same agent loop. GitHub MCP handles the remote research, commit, and pull request; local editor and terminal tools handle the edit and test.</aside>
       </section>
 
-      <section class="heading-only"><h2>Agent skills alongside MCP</h2></section>
+      <section class="heading-only"><h2>Agent skills</h2></section>
 
-      <section>
-        <h3>Skills and MCP solve different problems</h3>
-        <table>
-          <thead><tr><th></th><th>Agent skill</th><th>MCP server</th></tr></thead>
-          <tbody>
-            <tr><td><strong>Provides</strong></td><td>Instructions, workflows, scripts, examples</td><td>Live tools, resources, and prompts</td></tr>
-            <tr><td><strong>Loads</strong></td><td>On demand from project or user directories</td><td>Through a configured connection</td></tr>
-            <tr><td><strong>Permissions</strong></td><td>Does not grant access itself</td><td>Bound by credentials, scopes, and approvals</td></tr>
-            <tr><td><strong>Value together</strong></td><td colspan="2">A repeatable procedure that knows which current tools to call and how to validate results</td></tr>
-          </tbody>
-        </table>
-      </section>
-
-      <section>
-        <h3>Progressive skill loading</h3>
-        <div class="flow">
-          <div class="node">Prompt matches skill description</div><div class="arrow">&rarr;</div>
-          <div class="node action">Copilot loads SKILL.md</div><div class="arrow">&rarr;</div>
-          <div class="node">Skill directs a readiness workflow</div><div class="arrow">&rarr;</div>
-          <div class="node server">GitHub MCP supplies live evidence</div>
-        </div>
-        <div class="callout">Review skills like code. Instructions and bundled scripts can influence which tools the agent runs.</div>
-      </section>
-
-      <section>
-        <h3>Project and installed skills</h3>
-        <div class="two-column">
-          <div class="box">
-            <h4>Project skill</h4>
-            <p><code>.github/skills/pr-readiness/SKILL.md</code></p>
-            <p>Versioned and shared with the project.</p>
+      <section class="compact-code">
+        <h3>What is an agent skill?</h3>
+        <p>A folder with <code>SKILL.md</code> instructions, plus optional scripts, references, and assets.</p>
+        <div class="two-column" style="grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); align-items: stretch;">
+          <div style="display: flex; flex-direction: column;">
+            <h4 style="margin-bottom: 8px;">Folder layout</h4>
+            <pre style="flex: 1; margin-bottom: 0;"><code class="language-plaintext" data-trim style="height: 100%; box-sizing: border-box;">pdf-processing/
+├── SKILL.md
+├── scripts/
+│   └── extract.py
+├── references/
+│   └── REFERENCE.md
+└── assets/</code></pre>
           </div>
-          <div class="box">
-            <h4>Installed from a repository</h4>
-            <p><code>npx skills add mattpocock/skills</code></p>
-            <p>Selected, copied, and inspectable before use.</p>
+          <div style="display: flex; flex-direction: column;">
+            <h4 style="margin-bottom: 8px;"><code>SKILL.md</code></h4>
+            <pre style="flex: 1; margin-bottom: 0;"><code class="nohighlight hljs" data-trim data-noescape style="height: 100%; box-sizing: border-box;"><span class="hljs-meta">---</span>
+<span class="hljs-attr">name:</span> <span class="hljs-string">pdf-processing</span>
+<span class="hljs-attr">description:</span> <span class="hljs-string">Extract PDF text, fill forms,
+  merge files. Use when handling PDFs.</span>
+<span class="hljs-meta">---</span>
+
+<span class="hljs-section"># PDF processing</span>
+
+<span class="hljs-bullet">1.</span> Run scripts/extract.py on the file.
+<span class="hljs-bullet">2.</span> See references/REFERENCE.md for
+   form field details.</code></pre>
           </div>
         </div>
+        <p class="muted">🔗 <a target="_blank" href="https://agentskills.io/home">agentskills.io</a></p>
+        <aside class="notes">Agent Skills is an open format, originally from Anthropic, supported by GitHub Copilot, VS Code, Claude Code, Codex, and many other agents. The frontmatter needs a name and description; the description tells the agent when to use the skill. The body is plain Markdown instructions, and the optional folders hold code, docs, and templates the agent loads only when needed.</aside>
+      </section>
+
+      <section>
+        <h3>How coding agents run skills</h3>
+        <div class="three-column" style="align-items: stretch;">
+          <div class="box" style="border: 2px solid #1338C9;">
+            <h4>1. Discover</h4>
+            <p>Only each skill's <code>name</code> and <code>description</code> are in context.</p>
+          </div>
+          <div class="box">
+            <h4>2. Activate</h4>
+            <p>When a task matches a description, the agent reads the full <code>SKILL.md</code>.</p>
+          </div>
+          <div class="box">
+            <h4>3. Execute</h4>
+            <p>Scripts, references, and assets are loaded only as needed.</p>
+          </div>
+        </div>
+        <div class="callout">Test your description: the skill should activate when it's needed, and stay quiet when it's not.</div>
+        <aside class="notes">This is progressive disclosure, as described in the Agent Skills spec. Exact behavior varies by client, and many clients also let you invoke a skill directly, for example with a slash command.</aside>
+      </section>
+
+      <section>
+        <h3>Where skills live</h3>
+        <div class="two-column" style="align-items: stretch;">
+          <div class="box" style="display: flex; flex-direction: column;">
+            <h4>Project level</h4>
+            <p><code style="white-space: nowrap; font-size: 0.78em;">.agents/skills/pr-readiness/SKILL.md</code></p>
+            <p>Committed with the repository and shared with everyone who works on it.</p>
+            <p class="muted" style="margin-top: auto;"><img src="logos/logo_github.svg" alt="" style="height: 1em; margin: 0 6px 0 0; vertical-align: -0.12em; border: 0; box-shadow: none;">Copilot also reads <code style="white-space: nowrap; font-size: 0.78em;">.github/skills/</code></p>
+          </div>
+          <div class="box" style="display: flex; flex-direction: column;">
+            <h4>User level</h4>
+            <p><code style="white-space: nowrap; font-size: 0.78em;">~/.agents/skills/my-skill/SKILL.md</code></p>
+            <p>Available across all of your projects.</p>
+            <p class="muted" style="margin-top: auto;"><img src="logos/logo_github.svg" alt="" style="height: 1em; margin: 0 6px 0 0; vertical-align: -0.12em; border: 0; box-shadow: none;">Copilot also reads <code style="white-space: nowrap; font-size: 0.78em;">~/.copilot/skills/</code></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="compact-code">
+        <h3>Third-party skills</h3>
+        <div class="two-column" style="align-items: stretch;">
+          <div class="box">
+            <h4>Option 1: GitHub CLI</h4>
+            <pre style="margin: 0 0 12px;"><code class="language-bash" data-trim>gh skill install mattpocock/skills \
+  grill-me</code></pre>
+          </div>
+          <div class="box">
+            <h4>Option 2: skills CLI</h4>
+            <pre style="margin: 0 0 12px;"><code class="language-bash" data-trim>npx skills add mattpocock/skills \
+  --skill grill-me</code></pre>
+          </div>
+        </div>
+        <p class="muted">Both let you choose where to install: project or user level, and for which agents.</p>
         <div class="callout warning">Third-party skills run with agent permissions. Review their instructions and scripts before invoking them.</div>
       </section>
 
-      <section>
-        <span class="time">19 min</span>
-        <h3>Exercise 3: choose a skill activity</h3>
-        <p><a href="https://github.com/pamelafox/github-copilot-mcp-skills-workshop/blob/main/exercise3.md"><code>exercise3.md</code></a></p>
-        <ol>
-          <li>Choose one or more activities.</li>
-          <li>Run <code>/pr-readiness</code> against your pull request.</li>
-          <li>Check the live GitHub evidence behind its verdict.</li>
-          <li>Inspect and install Matt Pocock's <code>/grill-me</code> flow.</li>
-          <li>Compare the wrapper and reusable <code>grilling</code> skill.</li>
-          <li>Use one interview round to stress-test a quiz idea.</li>
-        </ol>
-      </section>
 
       <section>
-        <h3>More skill activities</h3>
-        <div class="two-column">
-          <div class="box">
-            <h4>Explore your client</h4>
-            <p>Discover a skill provided by VS Code, Copilot CLI, or the Copilot app.</p>
-            <p class="muted">Available skills and controls vary by client and version.</p>
+        <h3>Discovering skills</h3>
+        <div class="media-layout" style="grid-template-columns: minmax(0, 1fr) 560px;">
+          <div>
+            <h4 style="font-size: 0.8em; margin-bottom: 0.3em;">Browse directories</h4>
+            <ul class="tight" style="font-size: 0.72em;">
+              <li>🔗 <a target="_blank" href="https://awesome-copilot.github.com/skills/">awesome-copilot.github.com/skills</a><br><span class="muted">Community-curated skills for Copilot</span></li>
+              <li>🔗 <a target="_blank" href="https://skills.sh/">skills.sh</a><br><span class="muted">Directory of skills for many agents</span></li>
+            </ul>
+            <h4 style="font-size: 0.8em; margin: 0.8em 0 0.3em;">Search from your command line</h4>
+            <ul class="tight" style="font-size: 0.72em;">
+              <li><code style="font-size: 0.72em;">gh skill search &lt;topic&gt;</code><br><span class="muted">Search GitHub for skills</span></li>
+              <li><code style="font-size: 0.72em;">gh skill preview &lt;repo&gt; &lt;skill&gt;</code><br><span class="muted">Read a skill before installing it</span></li>
+            </ul>
           </div>
-          <div class="box">
-            <h4>Create a project skill</h4>
-            <p>Build <code>quiz-question-reviewer</code> and use Learn MCP to verify a proposed question.</p>
-            <p class="muted">Inspect, reload, invoke, and refine the skill.</p>
-          </div>
+          <img src="screenshot_awesome_copilot_skills.png" alt="Awesome GitHub Copilot skills directory, with skill cards and Copy install buttons" style="width: 560px;">
         </div>
       </section>
 
-      <section class="heading-only"><h2>Security and next steps</h2></section>
+      <section class="compact-code">
+        <h3>Skills over MCP</h3>
+        <p>An official MCP extension lets servers ship skills alongside their tools.</p>
+        <div class="two-column" style="align-items: stretch;">
+          <div class="box">
+            <h4>How it works</h4>
+            <ul class="tight">
+              <li>Server declares the skills extension</li>
+              <li><code>skills/list</code> returns each skill's frontmatter and file list</li>
+              <li>Files are read on demand as <code>skill://</code> resources</li>
+              <li>Host checks each file's SHA-256 digest before loading</li>
+            </ul>
+          </div>
+          <div class="box">
+            <h4>Why it helps</h4>
+            <ul class="tight">
+              <li>Instructions live with the service they describe</li>
+              <li>Skill updates ship with the server</li>
+              <li>No separate install step for users</li>
+              <li>Hosts treat skill content as untrusted and ask for approval</li>
+            </ul>
+          </div>
+        </div>
+        <p class="muted">SEP-2640 is final; client support is still rolling out. 🔗 <a target="_blank" href="https://github.com/modelcontextprotocol/ext-skills">ext-skills</a></p>
+        <aside class="notes">The extension ID is io.modelcontextprotocol/skills. It builds on the existing Resources primitive. A server lists skills with their name, description, and a manifest of files with digests. The host loads SKILL.md only when a skill is selected, verifies it against the manifest, and pulls supporting files on demand. Approval binds to the manifest, so a changed file requires fresh approval.</aside>
+      </section>
+
+      <section class="compact-code">
+        <h3>Agent plugins</h3>
+        <p>An open standard for packaging skills and MCP servers into one portable plugin.</p>
+        <div class="two-column" style="grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); align-items: stretch;">
+          <div style="display: flex; flex-direction: column;">
+            <pre style="flex: 1; margin: 0;"><code class="language-plaintext" data-trim style="height: 100%; box-sizing: border-box;">my-plugin/
+├── plugin.json
+├── skills/
+│   └── summarize/
+│       └── SKILL.md
+├── mcp.json
+└── com.example.client/
+    └── hooks/</code></pre>
+          </div>
+          <div class="box">
+            <ul class="tight">
+              <li><code>plugin.json</code>: names the plugin and the spec version it targets</li>
+              <li><code>skills/</code>: Agent Skills, in the standard format</li>
+              <li><code>mcp.json</code>: MCP servers to connect</li>
+              <li>Reverse-domain folders: client-specific extras, like hooks</li>
+            </ul>
+          </div>
+        </div>
+        <p class="muted">Version 1.0.0. Steering committee from Amazon, Cursor, Microsoft, OpenAI, and Vercel. 🔗 <a target="_blank" href="https://agent-plugins.org/">agent-plugins.org</a></p>
+        <aside class="notes">Plugin authors write the package once, and each compatible client decides how to install it, which permissions to grant, and how it appears in the UI. The GitHub MCP server repository already ships an agent-plugin package.</aside>
+      </section>
+
+      <section>
+        <h3>Skill, MCP server, or plugin?</h3>
+        <div class="decision">
+          <div class="decision-q">Does the agent need live data or actions in another system?</div>
+          <div class="decision-arrow">yes &rarr;</div>
+          <div class="decision-a mcp">MCP server</div>
+
+          <div class="decision-q">Does it need a repeatable procedure or team know-how?</div>
+          <div class="decision-arrow">yes &rarr;</div>
+          <div class="decision-a skill">Agent skill</div>
+
+          <div class="decision-q">Is the procedure tied to one server's tools?</div>
+          <div class="decision-arrow">yes &rarr;</div>
+          <div class="decision-a both">Skill served over MCP</div>
+
+          <div class="decision-q">Do you want to share skills and servers as one package?</div>
+          <div class="decision-arrow">yes &rarr;</div>
+          <div class="decision-a plugin">Agent plugin</div>
+        </div>
+        <div class="callout">These combine: a skill can call MCP tools, and a plugin can bundle both.</div>
+      </section>
+
+      <section>
+        <span class="time">15 min</span>
+        <h3>Exercise 4: Use agent skills</h3>
+        <p><a href="https://github.com/pamelafox/github-copilot-mcp-skills-workshop/blob/main/exercise4.md"><code>exercise4.md</code></a></p>
+        <ol>
+          <li>Run the project's <code>/pr-readiness</code> skill.</li>
+          <li>Install and run the <code>/grill-me</code> skill.</li>
+          <li>Inspect and run built-in Copilot client skills.</li>
+          <li>Create a brand new agent skill.</li>
+        </ol>
+      </section>
+
+      <section class="heading-only"><h2>Next steps</h2></section>
 
       <section>
         <h3>A five-question approval check</h3>

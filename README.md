@@ -8,10 +8,10 @@ This workshop is about **using MCP servers**, not creating one. No MCP server im
 
 | Exercise | Description |
 | --- | --- |
-| [Exercise 0](exercise0.md) | Fork the repository, set up the development environment, and verify GitHub Copilot. |
-| [Exercise 1](exercise1.md) | Understand MCP and connect GitHub Copilot to the public Microsoft Learn MCP server. |
-| [Exercise 2](exercise2.md) | Authenticate to GitHub, find a quiz issue, repair it, and open a pull request. |
-| [Exercise 3](exercise3.md) | Use a project skill, then install and try a popular third-party skill. |
+| [Exercise 1](exercise1.md) | Fork the repository, set up the development environment, and verify GitHub Copilot. |
+| [Exercise 2](exercise2.md) | Understand MCP and connect GitHub Copilot to the public Microsoft Learn MCP server. |
+| [Exercise 3](exercise3.md) | Authenticate to GitHub, find a quiz issue, repair it, and open a pull request. |
+| [Exercise 4](exercise4.md) | Use a project skill, then install and try a popular third-party skill. |
 
 ## Prerequisites
 
@@ -34,7 +34,7 @@ GitHub Codespaces is the recommended setup because Python, uv, and the required 
 
 ## Get started
 
-Open [Exercise 0](exercise0.md) to fork the repository, set up your environment and GitHub Copilot, then continue through the exercises in order.
+Open [Exercise 1](exercise1.md) to fork the repository, set up your environment and GitHub Copilot, then continue through the exercises in order.
 
 The slide deck is published at <https://pamelafox.github.io/github-copilot-mcp-skills-workshop/>.
 

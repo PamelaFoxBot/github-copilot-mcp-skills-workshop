@@ -1,96 +1,101 @@
-# Exercise 1: Understand MCP and connect a public server
+# Exercise 1: Set up your development environment and GitHub Copilot
 
-In this exercise, you will connect GitHub Copilot to a public MCP server and inspect the tools it provides.
+In this exercise, you will fork the workshop repository, open your fork in a development environment, verify its Python environment, and confirm that GitHub Copilot can work with the project.
 
 ## Contents
 
-- [Step 1: Connect Microsoft Learn MCP](#step-1-connect-microsoft-learn-mcp)
-- [Step 2: Inspect the available tools](#step-2-inspect-the-available-tools)
-- [Step 3: Use the tools for research](#step-3-use-the-tools-for-research)
-- [Bonus](#bonus)
+- [Step 1: Fork the workshop repository](#step-1-fork-the-workshop-repository)
+- [Step 2: Set up your development environment](#step-2-set-up-your-development-environment)
+- [Step 3: Set up GitHub Copilot](#step-3-set-up-github-copilot)
 
-## Step 1: Connect Microsoft Learn MCP
+## Step 1: Fork the workshop repository
 
-Microsoft Learn MCP is a remote Streamable HTTP server at `https://learn.microsoft.com/api/mcp`. It is public, free, and requires no sign-in.
+1. Sign in to your GitHub account and open the [workshop repository](https://github.com/pamelafox/github-copilot-mcp-skills-workshop).
+1. Select **Fork**, choose your personal account as the owner, and keep the repository name `github-copilot-mcp-skills-workshop`.
+1. Select **Create fork** and wait for GitHub to open the new repository under your account.
+1. Confirm that the page identifies it as forked from `pamelafox/github-copilot-mcp-skills-workshop`.
 
-### VS Code or Codespaces
+Use your fork for every setup option below. This ensures your Codespace or local
+checkout already has a writable Git repository when you create the pull request
+in Exercise 3.
 
-1. Open `.mcp.json` in the repository root and add the server:
+## Step 2: Set up your development environment
 
-   ```json
-   {
-     "servers": {
-       "microsoft-learn": {
-         "type": "http",
-         "url": "https://learn.microsoft.com/api/mcp"
-       }
-     }
-   }
-   ```
+Choose one option. GitHub Codespaces is recommended because the repository's development container installs Python, uv, dependencies, and the required VS Code extensions.
 
-2. Save the file and select **Start** above the server definition. If VS Code asks whether you trust the server, review the URL and approve it.
-3. Open Copilot Chat in **Agent** mode.
-4. Select **Configure Tools** in the chat input and expand `microsoft-learn`.
+### Option A: GitHub Codespaces (recommended)
+
+1. Open `https://github.com/YOUR-GITHUB-USERNAME/github-copilot-mcp-skills-workshop`.
+1. Select **Code**, then **Codespaces**, then **Create codespace on main**.
+
+   ![Create a codespace from the repository](docs/screenshot_codespaces_open.png)
+
+1. Wait for the browser-based VS Code editor to load and the `postCreateCommand` to finish.
+
+### Option B: VS Code with Dev Containers
+
+Install [VS Code](https://code.visualstudio.com/), [Docker Desktop](https://www.docker.com/products/docker-desktop/), and the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers). Then run:
+
+```bash
+git clone https://github.com/YOUR-GITHUB-USERNAME/github-copilot-mcp-skills-workshop.git
+code github-copilot-mcp-skills-workshop
+```
+
+When VS Code opens, select **Reopen in Container**. If the prompt does not appear, run **Dev Containers: Reopen in Container** from the Command Palette. Wait for the container setup to finish.
+
+### Option C: Local environment
+
+Install [Git](https://git-scm.com/), Python 3.12 or later, [uv](https://docs.astral.sh/uv/getting-started/installation/), and an environment from the [supported Copilot environments](README.md#supported-copilot-environments). Then run:
+
+```bash
+git clone https://github.com/YOUR-GITHUB-USERNAME/github-copilot-mcp-skills-workshop.git
+cd github-copilot-mcp-skills-workshop
+uv sync
+```
+
+### Verify the environment
+
+From the repository root, run:
+
+```bash
+uv run python --version
+uv run python -c "from src.quiz import QUESTIONS; print(len(QUESTIONS))"
+```
+
+Confirm that Python is version 3.12 or later and the second command reports the
+number of quiz questions.
+
+## Step 3: Set up GitHub Copilot
+
+Choose the Copilot environment you will use for the workshop.
+
+### GitHub Copilot in VS Code or Codespaces
+
+1. Open Copilot Chat using the chat icon in the VS Code title bar.
+
+   ![Open Copilot Chat in VS Code](docs/screenshot_copilot_togglechat.png)
+
+1. Sign in and accept the usage terms if prompted.
+1. Select **Agent** mode in the chat input.
+
+   ![Copilot Chat with Agent mode selected](docs/screenshot_copilot_agent.png)
+
+1. Send `Which workspace folder is currently open?` and confirm the response names this repository.
+1. Ask `What is the upstream repository for this fork?` and confirm the response identifies `pamelafox/github-copilot-mcp-skills-workshop`.
 
 ### GitHub Copilot CLI
 
-1. Add the server to your user configuration:
-
-   ```bash
-   copilot mcp add --transport http microsoft-learn https://learn.microsoft.com/api/mcp
-   ```
-
-2. Start an interactive `copilot` session.
-3. Enter `/mcp show microsoft-learn` to inspect its status and tools.
+1. Install Copilot CLI by following the [installation guide](https://docs.github.com/en/copilot/how-tos/copilot-cli/set-up-copilot-cli/install-copilot-cli).
+1. From the repository root, run `copilot` and sign in if prompted.
+1. Ask `Which repository am I currently working in?` and confirm the response.
+1. Ask `What is the upstream repository for this fork?` and confirm the response identifies `pamelafox/github-copilot-mcp-skills-workshop`.
 
 ### GitHub Copilot app
 
-1. Open **Settings**, select **MCP**, then select **Add server**.
-2. Name it `microsoft-learn`, choose **HTTP**, and enter `https://learn.microsoft.com/api/mcp`.
-3. Add the server and confirm it's shown as enabled and loaded with a green check mark.
-
-## Step 2: Inspect the available tools
-
-Confirm that the server currently exposes these tools:
-
-- `microsoft_docs_search` for semantic search of official Microsoft documentation
-- `microsoft_docs_fetch` for reading a selected documentation page
-- `microsoft_code_sample_search` for official code examples
-
-Ask Copilot:
-
-```text
-List the tools exposed by the Microsoft Learn MCP server. For each tool, show its purpose and required arguments.
-```
-
-## Step 3: Use the tools for research
-
-Ask Copilot:
-
-```text
-Find the current GPU options for Azure Container Apps. Cite the relevant Microsoft Learn docs.
-```
-
-### What to observe
-
-- Copilot should choose `microsoft_docs_search`, and may follow with `microsoft_docs_fetch`.
-- You can expand tool calls to see the arguments and return value.
-- A read-only documentation lookup may still require a tool approval in GitHub Copilot, depending on how you've [configured approvals](https://code.visualstudio.com/docs/agents/run/approvals).
-
-## Bonus
-
-If you have more time:
-
-- Disable `microsoft_docs_fetch`, repeat the prompt, and compare the depth of the answer.
-- Ask Copilot to find an official Python code sample for uploading text to Azure Blob Storage, then watch whether it chooses `microsoft_code_sample_search`.
-- Connect another read-only MCP server and compare its tools:
-
-  | Server | Endpoint | Provides |
-  | --- | --- | --- |
-  | [DeepWiki](https://docs.devin.ai/work-with-devin/deepwiki-mcp) | `https://mcp.deepwiki.com/mcp` | GitHub repository documentation |
-  | [French government](https://github.com/datagouv/datagouv-mcp) | `https://mcp.data.gouv.fr/mcp` | French government data |
-  | [Hugging Face](https://huggingface.co/mcp) | `https://huggingface.co/mcp` | Model, dataset, paper, and Space discovery |
-
-  Find more public servers in the [GitHub MCP Registry](https://github.com/mcp).
+1. Install and open the [GitHub Copilot app](https://github.com/github/app).
+1. From **Sessions**, select **+**, then **Add project from GitHub repository**.
+1. Add `https://github.com/YOUR-GITHUB-USERNAME/github-copilot-mcp-skills-workshop`.
+1. Ask `Which repository is attached to this session?` and confirm the response.
+1. Ask `What is the upstream repository for this fork?` and confirm the response identifies `pamelafox/github-copilot-mcp-skills-workshop`.
 
 Continue to [Exercise 2](exercise2.md).
