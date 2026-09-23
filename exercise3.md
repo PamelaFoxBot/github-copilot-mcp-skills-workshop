@@ -1,4 +1,4 @@
-# Exercise 3: Use the GitHub MCP server
+# Exercise 3: Connect GitHub Copilot to GitHub MCP server
 
 In this exercise, you will connect to the [GitHub MCP server](https://github.com/github/github-mcp-server), which gives Copilot access to GitHub repositories, issues, pull requests, and more. Unlike the Microsoft Learn server from Exercise 2, this server requires authentication.
 

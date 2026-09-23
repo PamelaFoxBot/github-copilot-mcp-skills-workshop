@@ -496,6 +496,16 @@
       font-weight: 700;
     }
 
+    .reveal .time + h3 { padding-right: 150px; }
+    .reveal .exercise-label {
+      display: block;
+      margin-bottom: 0.15em;
+      color: var(--deck-heading);
+      font-size: 0.62em;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
     .reveal section.heading-only {
       display: flex !important;
       min-height: 720px;
@@ -798,13 +808,13 @@
           <tbody>
             <tr><td>11:00–11:15</td><td><span class="pill pill-welcome">Welcome</span></td><td>Introductions, GitHub Copilot, and Codespaces</td></tr>
             <tr><td>11:15–11:25</td><td><span class="pill pill-exercise">Exercise</span></td><td>Set up environment and GitHub Copilot</td></tr>
-            <tr><td>11:25–11:45</td><td><span class="pill pill-presentation">Presentation</span></td><td>MCP 101: agents, hosts, clients, and servers</td></tr>
-            <tr><td>11:45–12:00</td><td><span class="pill pill-exercise">Exercise</span></td><td>Connect and inspect a public server</td></tr>
-            <tr><td>12:00–12:10</td><td><span class="pill pill-presentation">Presentation</span></td><td>Authenticated MCP servers: sign-in and permissions</td></tr>
-            <tr><td>12:10–12:35</td><td><span class="pill pill-exercise">Exercise</span></td><td>Repair a quiz issue and open a pull request</td></tr>
-            <tr><td>12:35–12:40</td><td><span class="pill pill-presentation">Presentation</span></td><td>Agent skills: portable, on-demand workflows</td></tr>
-            <tr><td>12:40–12:55</td><td><span class="pill pill-exercise">Exercise</span></td><td>Use project and installed skills</td></tr>
-            <tr><td>12:55–1:00</td><td><span class="pill pill-presentation">Presentation</span></td><td>Wrap-up: apply least-privilege habits</td></tr>
+            <tr><td>11:25–11:45</td><td><span class="pill pill-presentation">Presentation</span></td><td>MCP: Model Context Protocol</td></tr>
+            <tr><td>11:45–12:00</td><td><span class="pill pill-exercise">Exercise</span></td><td>Connect GitHub Copilot to an MCP server</td></tr>
+            <tr><td>12:00–12:10</td><td><span class="pill pill-presentation">Presentation</span></td><td>Authenticated MCP servers</td></tr>
+            <tr><td>12:10–12:30</td><td><span class="pill pill-exercise">Exercise</span></td><td>Connect GitHub Copilot to GitHub MCP server</td></tr>
+            <tr><td>12:30–12:40</td><td><span class="pill pill-presentation">Presentation</span></td><td>Agent skills</td></tr>
+            <tr><td>12:40–12:55</td><td><span class="pill pill-exercise">Exercise</span></td><td>Run agent skills in GitHub Copilot</td></tr>
+            <tr><td>12:55–1:00</td><td><span class="pill pill-presentation">Presentation</span></td><td>Next steps</td></tr>
           </tbody>
         </table>
       </section>
@@ -837,7 +847,7 @@
 
       <section>
         <span class="time">10 min</span>
-        <h3>Exercise 1: Set up environment and Copilot</h3>
+        <h3><span class="exercise-label">Exercise 1</span>Set up environment and GitHub Copilot</h3>
         <p><a href="https://github.com/pamelafox/github-copilot-mcp-skills-workshop/blob/main/exercise1.md"><code>exercise1.md</code></a></p>
         <ol>
           <li>Fork the workshop repository into your account.</li>
@@ -848,7 +858,7 @@
         </ol>
       </section>
 
-      <section class="heading-only"><h2>MCP 101</h2></section>
+      <section class="heading-only"><h2>MCP: Model Context Protocol</h2></section>
 
       <section>
         <h3>AI agents</h3>
@@ -1288,7 +1298,7 @@
 
       <section>
         <span class="time">15 min</span>
-        <h3>Exercise 2: connect and inspect</h3>
+        <h3><span class="exercise-label">Exercise 2</span>Connect GitHub Copilot to an MCP server</h3>
         <p><a href="https://github.com/pamelafox/github-copilot-mcp-skills-workshop/blob/main/exercise2.md"><code>exercise2.md</code></a></p>
         <ol>
           <li>Connect the Microsoft Learn MCP server.</li>
@@ -1545,8 +1555,8 @@
       </section>
 
       <section>
-        <span class="time">25 min</span>
-        <h3>Exercise 3: Use the GitHub MCP server</h3>
+        <span class="time">20 min</span>
+        <h3><span class="exercise-label">Exercise 3</span>Connect GitHub Copilot to GitHub MCP server</h3>
         <p><a href="https://github.com/pamelafox/github-copilot-mcp-skills-workshop/blob/main/exercise3.md"><code>exercise3.md</code></a></p>
         <ol>
           <li>Connect GitHub MCP with authenticated tools.</li>
@@ -1747,7 +1757,7 @@
 
       <section>
         <span class="time">15 min</span>
-        <h3>Exercise 4: Use agent skills</h3>
+        <h3><span class="exercise-label">Exercise 4</span>Run agent skills in GitHub Copilot</h3>
         <p><a href="https://github.com/pamelafox/github-copilot-mcp-skills-workshop/blob/main/exercise4.md"><code>exercise4.md</code></a></p>
         <ol>
           <li>Run the project's <code>/pr-readiness</code> skill.</li>

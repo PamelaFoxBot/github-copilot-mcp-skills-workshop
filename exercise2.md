@@ -1,4 +1,4 @@
-# Exercise 2: Understand MCP and connect a public server
+# Exercise 2: Connect GitHub Copilot to an MCP server
 
 In this exercise, you will connect GitHub Copilot to a public MCP server and inspect the tools it provides.
 

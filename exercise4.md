@@ -1,4 +1,4 @@
-# Exercise 4: Use agent skills
+# Exercise 4: Run agent skills in GitHub Copilot
 
 In Exercise 3, you used GitHub MCP tools to repair a quiz issue and open a pull
 request. In this exercise, choose one or more of the following activities to
