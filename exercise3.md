@@ -18,15 +18,15 @@ In Step 1, follow the connection instructions for your Copilot environment. Then
 
  ```json
  {
-   "servers": {
-   "microsoft-learn": {
-   "type": "http",
-   "url": "https://learn.microsoft.com/api/mcp"
-   },
-   "github": {
-   "type": "http",
-   "url": "https://api.githubcopilot.com/mcp/"
-   }
+   "mcpServers": {
+    "microsoft-learn": {
+      "type": "http",
+      "url": "https://learn.microsoft.com/api/mcp"
+    },
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/"
+    }
    }
  }
  ```

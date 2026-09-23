@@ -19,7 +19,7 @@ Microsoft Learn MCP is a remote Streamable HTTP server at `https://learn.microso
 
    ```json
    {
-     "servers": {
+     "mcpServers": {
        "microsoft-learn": {
          "type": "http",
          "url": "https://learn.microsoft.com/api/mcp"
