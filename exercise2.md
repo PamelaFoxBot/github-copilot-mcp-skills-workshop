@@ -92,5 +92,3 @@ If you have more time:
   | [Hugging Face](https://huggingface.co/mcp) | `https://huggingface.co/mcp` | Model, dataset, paper, and Space discovery |
 
   Find more public servers in the [GitHub MCP Registry](https://github.com/mcp).
-
-Continue to [Exercise 3](exercise3.md).
