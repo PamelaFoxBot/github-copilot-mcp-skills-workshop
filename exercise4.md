@@ -12,42 +12,31 @@ explore project, installed, client-provided, and custom skills.
 - [Create your own project skill](#create-your-own-project-skill)
 - [What to observe](#what-to-observe)
 
-## Prerequisites
-
-- To use `pr-readiness`, complete Exercise 3, keep its pull request URL, and
-  keep GitHub MCP connected with the `repos`, `issues`, and `pull_requests`
-  toolsets.
-- To install a third-party skill, use VS Code, Codespaces, or Copilot CLI with
-  a workspace terminal.
-
-If you used the Copilot app for earlier exercises, open your fork in a
-Codespace to run the skill installer. The app does not provide a workspace
-terminal.
-
 ## Use a project skill
 
-The workshop includes `.agents/skills/pr-readiness/SKILL.md`. Open the file and
-inspect its frontmatter and workflow. The skill provides instructions; GitHub
-MCP provides the live tools and authenticated data.
+This repository includes `.agents/skills/pr-summary-report/SKILL.md`.
+Open the file and inspect its frontmatter and workflow.
+The skill provides instructions for a process that uses the GitHub MCP server.
 
 Start a fresh chat and ask Copilot:
 
 ```text
-Use the /pr-readiness skill to assess this pull request: <YOUR-PR-URL>
-
-Use GitHub MCP for all GitHub data. Show me the readiness report, but do not
-make any GitHub changes.
+Use /pr-summary-report to summarize the open pull requests in
+pamelafox/github-copilot-mcp-skills-workshop.
 ```
 
 If slash invocation is unavailable, ask Copilot to use the repository's
-`pr-readiness` skill by name. Approve the read-only GitHub calls as they appear.
+`pr-summary-report` skill by name. Approve the read-only GitHub calls as they
+appear.
 
 Check that the report:
 
-1. Names the correct upstream base and your fork's head branch.
-2. Connects the linked issue requirements to the changed file.
-3. Distinguishes missing checks or reviews from failures.
-4. Claims local validation only when commands actually ran.
+1. Includes every open pull request, with links.
+2. Gives each pull request its own row when five or fewer are open.
+3. Groups related work only when linked issues, goals, or changed files support
+   the relationship.
+4. Distinguishes explicit relationships from inferred ones.
+5. Makes no changes on GitHub.
 
 ## Install a third-party skill
 

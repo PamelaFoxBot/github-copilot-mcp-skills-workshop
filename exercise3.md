@@ -8,8 +8,6 @@ In this exercise, you will connect to the [GitHub MCP server](https://github.com
 - [Step 2: Use GitHub MCP](#step-2-use-github-mcp)
 - [Bonus](#bonus)
 
-In Step 1, follow the connection instructions for your Copilot environment. Then everyone completes the shared workflow in Step 2.
-
 ## Step 1: Connect GitHub Copilot to GitHub MCP
 
 ### GitHub Copilot in VS Code or Codespaces
@@ -18,15 +16,15 @@ In Step 1, follow the connection instructions for your Copilot environment. Then
 
  ```json
  {
-   "servers": {
-   "microsoft-learn": {
-   "type": "http",
-   "url": "https://learn.microsoft.com/api/mcp"
-   },
-   "github": {
-   "type": "http",
-   "url": "https://api.githubcopilot.com/mcp/"
-   }
+   "mcpServers": {
+    "microsoft-learn": {
+      "type": "http",
+      "url": "https://learn.microsoft.com/api/mcp"
+    },
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/"
+    }
    }
  }
  ```
@@ -58,8 +56,7 @@ Configure the GitHub MCP server with the toolsets needed to research an issue, u
 1. Open the **Add** menu in the upper-right corner and select **MCP Server**.
 1. Enter `github` for the server name and select **HTTP**.
 1. Enter `https://api.githubcopilot.com/mcp/` for the URL.
-1. Under **Headers**, select **Add header**. Enter `X-MCP-Toolsets` for the header name and `repos,issues,pull_requests` for its value.
-1. Leave the OAuth Client ID and timeout fields at their defaults, then select **Add server**.
+1. Select **Add server**.
 1. Complete GitHub authorization when prompted.
 1. Ask Copilot to verify the available tools:
 
@@ -83,14 +80,7 @@ This repository has a small quiz script in `src/quiz.py` with known bugs and mis
  Which of these issues would be the easiest to fix? Pick one for me.
  ```
 
-1. Ask Copilot to run the quiz so you can see its behavior:
-
- ```text
- Run the MCP quiz in this repository so I can try it.
- ```
-
- If Copilot cannot run it in your current environment, use this command in a
- workspace terminal:
+1. If you have a Python environment available, run the quiz to see the suggested issue for yourself:
 
  ```bash
  uv run python src/quiz.py
@@ -114,9 +104,17 @@ This repository has a small quiz script in `src/quiz.py` with known bugs and mis
 
 If you have more time:
 
-- **Find more quiz projects**: Ask Copilot to search GitHub for quiz apps with features such as randomized question order, difficulty levels, or timed questions. You may see it use the `search_repositories` tool.
-- **Explore a specific project**: Choose one result and ask Copilot to examine its structure and implementation without cloning it. You may see it use the `get_file_contents` tool.
-- **Try another authenticated server**: Connect to another MCP server that uses OAuth:
+- **Explore more GitHub MCP server tools**: For example, you can ask Copilot to examine pull requests submitted by other workshop participants:
+
+  ```text
+  List the open pull requests in pamelafox/github-copilot-mcp-skills-workshop,
+  excluding my pull request.
+  Inspect their changes and summarize the different problems and approaches.
+  Include links to the pull requests.
+  ```
+
+  You may see it use the `list_pull_requests` and `pull_request_read` tools.
+- **Try a different authenticated server**: Connect to another MCP server that uses OAuth:
   - [Notion MCP](https://developers.notion.com/docs/mcp): search, read, create, and update content in a Notion workspace
   - [Linear MCP](https://linear.app/docs/mcp): find, create, and update issues, projects, and comments in Linear
   - [Azure DevOps MCP](https://learn.microsoft.com/azure/devops/mcp-server/mcp-server-overview): query work items, repos, pipelines, and wikis in Azure DevOps

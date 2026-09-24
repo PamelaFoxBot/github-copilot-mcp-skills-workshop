@@ -43,27 +43,35 @@ code github-copilot-mcp-skills-workshop
 
 When VS Code opens, select **Reopen in Container**. If the prompt does not appear, run **Dev Containers: Reopen in Container** from the Command Palette. Wait for the container setup to finish.
 
-### Option C: Local environment
+### Option C: Local environment with Copilot App or CLI
 
-Install [Git](https://git-scm.com/), Python 3.12 or later, [uv](https://docs.astral.sh/uv/getting-started/installation/), and an environment from the [supported Copilot environments](README.md#supported-copilot-environments). Then run:
+Install:
+
+* [Git](https://git-scm.com/)
+* Python 3.12 or later
+* [uv](https://docs.astral.sh/uv/getting-started/installation/)
+* [GitHub Copilot CLI](https://docs.github.com/en/copilot/concepts/agents/about-copilot-cli) or [GitHub Copilot app](https://github.com/github/app)
+
+Clone your fork of the repository:
 
 ```bash
 git clone https://github.com/YOUR-GITHUB-USERNAME/github-copilot-mcp-skills-workshop.git
 cd github-copilot-mcp-skills-workshop
+``
+
+Install Python dependencies for the example program:
+
+```
 uv sync
 ```
 
-### Verify the environment
-
-From the repository root, run:
+Verify your Python installation:
 
 ```bash
 uv run python --version
-uv run python -c "from src.quiz import QUESTIONS; print(len(QUESTIONS))"
 ```
 
-Confirm that Python is version 3.12 or later and the second command reports the
-number of quiz questions.
+Confirm that Python is version 3.12 or later.
 
 ## Step 3: Set up GitHub Copilot
 
@@ -81,11 +89,11 @@ Choose the Copilot environment you will use for the workshop.
    ![Copilot Chat with Agent mode selected](docs/screenshot_copilot_agent.png)
 
 1. Send `Which workspace folder is currently open?` and confirm the response names this repository.
-1. Ask `What is the upstream repository for this fork?` and confirm the response identifies `pamelafox/github-copilot-mcp-skills-workshop`.
+1. Ask `What is the upstream repository for this fork?` and confirm the response identifies `pamelafox/github-copilot-mcp-skills-workshop`. 
 
 ### GitHub Copilot CLI
 
-1. Install Copilot CLI by following the [installation guide](https://docs.github.com/en/copilot/how-tos/copilot-cli/set-up-copilot-cli/install-copilot-cli).
+1. Install Copilot CLI by following the [installation guide](https://docs.github.com/en/copilot/how-tos/copilot-cli/set-up-copilot-cli/install-copilot-cli). If you're in Codespaces, use the `curl` command on that page.
 1. From the repository root, run `copilot` and sign in if prompted.
 1. Ask `Which repository am I currently working in?` and confirm the response.
 1. Ask `What is the upstream repository for this fork?` and confirm the response identifies `pamelafox/github-copilot-mcp-skills-workshop`.
@@ -93,9 +101,7 @@ Choose the Copilot environment you will use for the workshop.
 ### GitHub Copilot app
 
 1. Install and open the [GitHub Copilot app](https://github.com/github/app).
-1. From **Sessions**, select **+**, then **Add project from GitHub repository**.
+1. From **Projects**, select **+**, then **Add GitHub repository**.
 1. Add `https://github.com/YOUR-GITHUB-USERNAME/github-copilot-mcp-skills-workshop`.
 1. Ask `Which repository is attached to this session?` and confirm the response.
 1. Ask `What is the upstream repository for this fork?` and confirm the response identifies `pamelafox/github-copilot-mcp-skills-workshop`.
-
-Continue to [Exercise 2](exercise2.md).
