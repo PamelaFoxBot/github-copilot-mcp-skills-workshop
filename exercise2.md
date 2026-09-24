@@ -11,7 +11,7 @@ In this exercise, you will connect GitHub Copilot to a public MCP server and ins
 
 ## Step 1: Connect Microsoft Learn MCP
 
-Microsoft Learn MCP is a remote Streamable HTTP server at `https://learn.microsoft.com/api/mcp`. It is public, free, and requires no sign-in.
+Microsoft Learn MCP is a remote HTTP server at `https://learn.microsoft.com/api/mcp`. It is public, free, and requires no sign-in.
 
 ### VS Code or Codespaces
 
@@ -30,7 +30,7 @@ Microsoft Learn MCP is a remote Streamable HTTP server at `https://learn.microso
 
 2. Save the file and select **Start** above the server definition. If VS Code asks whether you trust the server, review the URL and approve it.
 3. Open Copilot Chat in **Agent** mode.
-4. Select **Configure Tools** in the chat input and expand `microsoft-learn`.
+4. Select **Configure Tools** in the chat input and expand `microsoft-learn`. You should see three tools listed.
 
 ### GitHub Copilot CLI
 
@@ -51,7 +51,7 @@ Microsoft Learn MCP is a remote Streamable HTTP server at `https://learn.microso
 
 ## Step 2: Inspect the available tools
 
-Confirm that the server currently exposes these tools:
+Confirm that the Copilot agent can see these tools:
 
 - `microsoft_docs_search` for semantic search of official Microsoft documentation
 - `microsoft_docs_fetch` for reading a selected documentation page
@@ -71,18 +71,17 @@ Ask Copilot:
 Find the current GPU options for Azure Container Apps. Cite the relevant Microsoft Learn docs.
 ```
 
-### What to observe
+In the response, observe:
 
-- Copilot should choose `microsoft_docs_search`, and may follow with `microsoft_docs_fetch`.
-- You can expand tool calls to see the arguments and return value.
-- A read-only documentation lookup may still require a tool approval in GitHub Copilot, depending on how you've [configured approvals](https://code.visualstudio.com/docs/agents/run/approvals).
+- Copilot calls the `microsoft_docs_search` tool, possibly followed by `microsoft_docs_fetch`
+- You can expand tool calls to see the arguments and return value
+- The tools may require a tool approval in GitHub Copilot, depending on how you've [configured approvals](https://code.visualstudio.com/docs/agents/run/approvals)
 
 ## Bonus
 
 If you have more time:
 
-- Disable `microsoft_docs_fetch`, repeat the prompt, and compare the depth of the answer.
-- Ask Copilot to find an official Python code sample for uploading text to Azure Blob Storage, then watch whether it chooses `microsoft_code_sample_search`.
+- Ask Copilot to "find an official Python code sample for uploading text to Azure Blob Storage", then watch whether it chooses `microsoft_code_sample_search`.
 - Connect another read-only MCP server and compare its tools:
 
   | Server | Endpoint | Provides |

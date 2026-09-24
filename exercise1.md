@@ -30,48 +30,48 @@ Choose one option. GitHub Codespaces is recommended because the repository's dev
 
    ![Create a codespace from the repository](docs/screenshot_codespaces_open.png)
 
-1. Wait for the browser-based VS Code editor to load and the `postCreateCommand` to finish.
+1. Wait for the browser-based VS Code editor to fully load.
 
 ### Option B: VS Code with Dev Containers
 
-Install [VS Code](https://code.visualstudio.com/), [Docker Desktop](https://www.docker.com/products/docker-desktop/), and the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers). Then run:
+This is a good option if you are already a user of Docker and Dev Containers, and want to avoid Python setup on your actual machine.
 
-```bash
-git clone https://github.com/YOUR-GITHUB-USERNAME/github-copilot-mcp-skills-workshop.git
-code github-copilot-mcp-skills-workshop
-```
+1. Install:
 
-When VS Code opens, select **Reopen in Container**. If the prompt does not appear, run **Dev Containers: Reopen in Container** from the Command Palette. Wait for the container setup to finish.
+   * [VS Code](https://code.visualstudio.com/)
+   * [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+   * [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) 
 
-### Option C: Local environment with Copilot App or CLI
+2. Clone and open your fork of the repository:
 
-Install:
+   ```bash
+   git clone https://github.com/YOUR-GITHUB-USERNAME/github-copilot-mcp-skills-workshop.git
+   code github-copilot-mcp-skills-workshop
+   ```
 
-* [Git](https://git-scm.com/)
-* Python 3.12 or later
-* [uv](https://docs.astral.sh/uv/getting-started/installation/)
-* [GitHub Copilot CLI](https://docs.github.com/en/copilot/concepts/agents/about-copilot-cli) or [GitHub Copilot app](https://github.com/github/app)
+3. When VS Code opens, select **Reopen in Container**. If the prompt does not appear, run **Dev Containers: Reopen in Container** from the Command Palette. Wait for the container setup to finish.
 
-Clone your fork of the repository:
+### Option C: Local environment
 
-```bash
-git clone https://github.com/YOUR-GITHUB-USERNAME/github-copilot-mcp-skills-workshop.git
-cd github-copilot-mcp-skills-workshop
-``
+1. Install:
 
-Install Python dependencies for the example program:
+   * [Git](https://git-scm.com/)
+   * Python 3.12 or later
+   * [uv](https://docs.astral.sh/uv/getting-started/installation/)
+   * [VS Code](https://code.visualstudio.com/), [GitHub Copilot CLI](https://docs.github.com/en/copilot/concepts/agents/about-copilot-cli) or [GitHub Copilot app](https://github.com/github/app)
 
-```
-uv sync
-```
+2. Clone your fork of the repository:
 
-Verify your Python installation:
+   ```bash
+   git clone https://github.com/YOUR-GITHUB-USERNAME/github-copilot-mcp-skills-workshop.git
+   cd github-copilot-mcp-skills-workshop
+   ```
 
-```bash
-uv run python --version
-```
+3. Install Python dependencies for the example program:
 
-Confirm that Python is version 3.12 or later.
+   ```
+   uv sync
+   ```
 
 ## Step 3: Set up GitHub Copilot
 
@@ -88,7 +88,7 @@ Choose the Copilot environment you will use for the workshop.
 
    ![Copilot Chat with Agent mode selected](docs/screenshot_copilot_agent.png)
 
-1. Send `Which workspace folder is currently open?` and confirm the response names this repository.
+1. Ask `Which workspace folder is currently open?` and confirm the response names this repository.
 1. Ask `What is the upstream repository for this fork?` and confirm the response identifies `pamelafox/github-copilot-mcp-skills-workshop`. 
 
 ### GitHub Copilot CLI
